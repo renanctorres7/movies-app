@@ -22,7 +22,7 @@ class SearchAppBar extends StatelessWidget {
       blendMode: BlendMode.dstIn,
       child: Container(
         color: AppColors.colorWhite,
-        height: 245.h,
+        height: 230.h,
         width: size.width,
         child: Padding(
           padding: EdgeInsets.only(top: 48.h, left: 20.w, right: 20.w),
