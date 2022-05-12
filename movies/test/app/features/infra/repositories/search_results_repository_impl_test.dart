@@ -47,4 +47,12 @@ void main() {
     final result = await repository.getListResults(text);
     expect(result, Left(NullDatasource()));
   });
+
+  test('Should return a Datasource Failure if datasource catchs error ',
+      () async {
+    when(() => datasource.searchText(text)).thenThrow(DatasourceFailure());
+
+    final result = await repository.getListResults(text);
+    expect(result, Left(DatasourceFailure()));
+  });
 }
