@@ -6,3 +6,10 @@ import '../errors/errors.dart';
 abstract class SearchByText {
   Future<Either<Failure, List<SearchResults>>> call(String text);
 }
+
+class SearchByTextImpl implements SearchByText {
+  @override
+  Future<Either<Failure, List<SearchResults>>> call(String text) {
+    throw UnimplementedError();
+  }
+}
