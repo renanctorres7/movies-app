@@ -4,7 +4,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:movies/app/features/domain/entities/search_genres.dart';
 import 'package:movies/app/features/domain/errors/errors.dart';
 import 'package:movies/app/features/domain/repositories/search_genres_repository.dart';
-import 'package:movies/app/features/domain/usecases/search_by_text.dart';
 import 'package:movies/app/features/domain/usecases/search_genres_usecase.dart';
 
 class SearchGenresRepositoryMock extends Mock

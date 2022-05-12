@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,7 +14,6 @@ void main() {
   final client = ClientMock();
   final datasource = MovieDatabaseDatasource(client);
   String text = "vingadores";
-  final String data = jsonEncode(jsonResponse);
 
   test('Should return a Search Result Model ', () async {
     when(() => client.get(Uri.parse(MovieDatabaseEndpoints.getUrlMovieSearch(
