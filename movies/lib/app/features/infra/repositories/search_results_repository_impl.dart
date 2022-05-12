@@ -13,9 +13,9 @@ class SearchResultsRepositoryImpl implements SearchResultsRepository {
       String text) async {
     try {
       final list = await datasource.searchText(text);
-      return list == null ? Left(DatasourceFailure()) : Right(list);
+      return list == null ? Left(NullDatasource()) : Right(list);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(DatasourceFailure());
     }
   }
 }

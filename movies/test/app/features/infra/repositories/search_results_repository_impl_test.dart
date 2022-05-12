@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:movies/app/features/domain/errors/errors.dart';
 import 'package:movies/app/features/infra/datasources/search_results_datasource.dart';
 import 'package:movies/app/features/infra/models/search_results_model.dart';
 import 'package:movies/app/features/infra/repositories/search_results_repository_impl.dart';
@@ -37,5 +38,13 @@ void main() {
 
     final result = await repository.getListResults(text);
     expect(result, Right(testList));
+  });
+
+  test('Should return a Null Datasource error if datasource returns null ',
+      () async {
+    when(() => datasource.searchText(text)).thenAnswer((_) async => null);
+
+    final result = await repository.getListResults(text);
+    expect(result, Left(NullDatasource()));
   });
 }
