@@ -28,10 +28,12 @@ void main() {
 
     final result = await usecase(text);
     expect(result | [], isA<List<SearchResults>>());
+    verify(() => repository.getListResults(text)).called(1);
   });
 
   test('Should return Invalid Search Text when a text is invalid', () async {
-    final result = usecase(null);
-    expect(result, Left(Failure()));
+    final result = await usecase(null);
+    expect(result, Left(InvalidSearchText()));
+    verifyNever(() => repository.getListResults(text));
   });
 }

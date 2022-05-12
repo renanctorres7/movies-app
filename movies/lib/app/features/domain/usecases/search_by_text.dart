@@ -15,10 +15,8 @@ class SearchByTextImpl implements SearchByText {
 
   @override
   Future<Either<Failure, List<SearchResults>>> call(String? text) async {
-    if (text != null && text.isNotEmpty) {
-      return await repository.getListResults(text);
-    } else {
-      return Left(Failure());
-    }
+    return text != null
+        ? await repository.getListResults(text)
+        : Left(InvalidSearchText());
   }
 }

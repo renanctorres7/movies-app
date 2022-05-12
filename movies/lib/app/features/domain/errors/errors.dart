@@ -1,3 +1,9 @@
-class Failure implements Exception {}
+import 'package:equatable/equatable.dart';
 
-class InvalidSearchText extends Failure {}
+abstract class Failure extends Equatable{}
+
+class InvalidSearchText extends Failure{
+  @override
+
+  List<Object?> get props => [];
+}
