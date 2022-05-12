@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:movies/app/core/keys/movie_database_api_key.dart';
-import 'package:movies/app/features/external/endpoints/movie_database_endpoints.dart';
 import 'package:movies/app/features/infra/datasources/search_results_datasource.dart';
 import 'package:movies/app/features/infra/models/search_results_model.dart';
 
-class MovieDatabaseDatasource implements SearchResultsDatasource {
+import '../endpoints/movie_database_endpoints.dart';
+
+class MovieDatabaseSearchDatasource implements SearchResultsDatasource {
   final Client client;
 
-  MovieDatabaseDatasource(this.client);
+  MovieDatabaseSearchDatasource(this.client);
   @override
   Future<List<SearchResultsModel>?> searchText(String text) async {
     final result = await client.get(Uri.parse(
