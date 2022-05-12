@@ -1,4 +1,4 @@
-const String jsonResponse = '''{
+const String searchJsonResponse = '''{
   "page": 1,
   "results": [
     {
