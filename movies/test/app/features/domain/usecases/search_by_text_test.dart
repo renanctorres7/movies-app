@@ -29,4 +29,13 @@ void main() {
     expect(result, Left(InvalidSearchText()));
     verifyNever(() => repository.getListResults(text));
   });
+
+  test('Should return a Server Failure when dont succeed', () async {
+    when(() => repository.getListResults(any()))
+        .thenAnswer((_) async => Left(ServerFailure()));
+
+    final result = await usecase(text);
+    expect(result, Left(ServerFailure()));
+    verify(() => repository.getListResults(text)).called(1);
+  });
 }
