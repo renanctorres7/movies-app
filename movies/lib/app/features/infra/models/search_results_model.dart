@@ -58,17 +58,17 @@ class SearchResultsModel extends SearchResults {
         posterPath: map['poster_path'],
         adult: map['adult'],
         overview: map['overview'],
-        releaseDate: map['releaseDate'],
-        genreIds: map['genreIds'],
+        releaseDate: map['release_date'],
+        genreIds: map['genre_ids'],
         id: map['id'],
-        originalTitle: map['originalTitle'],
-        originalLanguage: map['originalLanguage'],
+        originalTitle: map['original_title'],
+        originalLanguage: map['original_language'],
         title: map['title'],
-        backdropPath: map['backdropPath'],
+        backdropPath: map['backdrop_path'],
         popularity: map['popularity'],
-        voteCount: map['voteCount'],
+        voteCount: map['vote_count'],
         video: map['video'],
-        voteAverage: map['voteAverage']);
+        voteAverage: map['vote_average']);
   }
 
   String toJson() => jsonEncode(toMap());
