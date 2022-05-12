@@ -14,20 +14,13 @@ void main() {
   final usecase = SearchByTextImpl(repository);
   String text = 'teste';
   List<SearchResults> list = [];
+
   test('Should return a list with results', () async {
-    when(() => repository.getListResults(text))
+    when(() => repository.getListResults(any()))
         .thenAnswer((_) async => Right(list));
 
     final result = await usecase(text);
-    expect(result | [], isA<List<SearchResults>>());
-  });
-
-  test('Should return a list with results', () async {
-    when(() => repository.getListResults(text))
-        .thenAnswer((_) async => Right(list));
-
-    final result = await usecase(text);
-    expect(result | [], isA<List<SearchResults>>());
+    expect(result, Right(list));
     verify(() => repository.getListResults(text)).called(1);
   });
 
