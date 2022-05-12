@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:movies/app/features/domain/errors/errors.dart';
 import 'package:movies/app/features/infra/datasources/search_genres_datasource.dart';
 import 'package:movies/app/features/infra/models/search_genres_model.dart';
 import 'package:movies/app/features/infra/repositories/search_genres_repository_impl.dart';
@@ -16,5 +17,13 @@ void main() {
     when(() => datasource.searchGenres()).thenAnswer((_) async => list);
     final result = await repository.getGenresList();
     expect(result, Right(list));
+  });
+
+  test('Should return a Datasource Failure if datasource catchs error ',
+      () async {
+    when(() => datasource.searchGenres()).thenThrow(DatasourceFailure());
+
+    final result = await repository.getGenresList();
+    expect(result, Left(DatasourceFailure()));
   });
 }
