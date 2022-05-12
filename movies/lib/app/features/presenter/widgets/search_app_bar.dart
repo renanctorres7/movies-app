@@ -1,31 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
+import 'package:movies/app/features/presenter/widgets/genres_tab_bar.dart';
+import 'package:movies/app/features/presenter/widgets/search_box.dart';
 
-class SearchAppBar extends StatefulWidget {
+class SearchAppBar extends StatelessWidget {
   const SearchAppBar({Key? key}) : super(key: key);
 
   @override
-  State<SearchAppBar> createState() => _SearchAppBarState();
-}
-
-class _SearchAppBarState extends State<SearchAppBar> {
-  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
-      color: AppColors.colorWhite,
-      height: 245.h,
-      width: size.width,
-      child: Padding(
-        padding: EdgeInsets.only(top: 48.h),
-        child: Column(
-          children: [
-            Text(
-              'Filmes',
-              style: Theme.of(context).textTheme.headline1,
-            )
-          ],
+    final themeData = Theme.of(context);
+    return ShaderMask(
+      shaderCallback: (rect) {
+        return LinearGradient(
+          begin: Alignment.center,
+          end: Alignment.bottomCenter,
+          colors: [Colors.white, Colors.white, Colors.white.withOpacity(0.1)],
+        ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+      },
+      blendMode: BlendMode.dstIn,
+      child: Container(
+        color: AppColors.colorWhite,
+        height: 245.h,
+        width: size.width,
+        child: Padding(
+          padding: EdgeInsets.only(top: 48.h, left: 20.w, right: 20.w),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Filmes',
+                  style: themeData.textTheme.headline2,
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.only(top: 24.h),
+                  child: const SearchBox()),
+              Padding(
+                  padding: EdgeInsets.only(top: 16.h),
+                  child: const GenresTabBar()),
+            ],
+          ),
         ),
       ),
     );

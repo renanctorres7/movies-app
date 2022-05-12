@@ -14,6 +14,7 @@ class AppWidget extends StatelessWidget {
         splitScreenMode: true,
         builder: (child) {
           return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             title: 'Movies',
             theme: AppTheme.appTheme,
             routeInformationParser: Modular.routeInformationParser,
