@@ -30,7 +30,7 @@ class AppTheme {
           const TextSelectionThemeData(cursorColor: AppColors.colorGray08),
       cardColor: AppColors.colorWhite,
       splashColor: AppColors.colorHighlight,
-      scaffoldBackgroundColor: Colors.transparent,
+      scaffoldBackgroundColor: AppColors.colorWhite,
       brightness: Brightness.dark,
       fontFamily: "Montserrat",
       appBarTheme: const AppBarTheme(
