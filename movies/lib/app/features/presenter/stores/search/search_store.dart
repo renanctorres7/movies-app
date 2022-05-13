@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:movies/app/features/domain/usecases/search_by_text.dart';
 
@@ -9,7 +10,7 @@ class SearchStore extends NotifierStore<Failure, List<SearchResults>> {
   SearchStore(this.usecase) : super([]);
 
   getListResults(String text) async {
-    executeEither(() async =>
-        usecase(text) as Future<EitherAdapter<Failure, List<SearchResults>>>);
+    executeEither(() async => await usecase(text)
+        as Future<EitherAdapter<Failure, List<SearchResults>>>);
   }
 }

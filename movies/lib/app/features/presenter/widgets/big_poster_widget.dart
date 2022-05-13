@@ -45,6 +45,21 @@ class BigPosterWidget extends StatelessWidget {
                     height: 430.h,
                     width: 300.w,
                     fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.colorGray08,
+                          strokeWidth: 4,
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
                   ),
                 )),
             Container(

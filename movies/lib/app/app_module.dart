@@ -5,7 +5,7 @@ import 'package:movies/app/features/presenter/stores/search/search_store.dart';
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.factory((i) => SearchStore(i())),
+    Bind((i) => SearchStore(i())),
   ];
 
   @override

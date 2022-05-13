@@ -4,9 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
 class SearchBox extends StatelessWidget {
-  const SearchBox({Key? key, this.controller}) : super(key: key);
+  const SearchBox(
+      {Key? key, required this.controller, required this.onSubmitted})
+      : super(key: key);
 
-  final TextEditingController? controller;
+  final TextEditingController controller;
+  final Function(String) onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +25,7 @@ class SearchBox extends StatelessWidget {
           padding: EdgeInsets.only(left: 17.w, right: 17.w),
           child: TextField(
             controller: controller,
+            onSubmitted: onSubmitted,
             style: themeData.textTheme.bodyText1,
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.zero,

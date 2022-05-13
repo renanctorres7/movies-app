@@ -5,7 +5,12 @@ import 'package:movies/app/features/presenter/widgets/genres_tab_bar.dart';
 import 'package:movies/app/features/presenter/widgets/search_box.dart';
 
 class SearchAppBar extends StatelessWidget {
-  const SearchAppBar({Key? key}) : super(key: key);
+  const SearchAppBar(
+      {Key? key, required this.controller, required this.onSubmitted})
+      : super(key: key);
+
+  final TextEditingController controller;
+  final Function(String) onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,10 @@ class SearchAppBar extends StatelessWidget {
               ),
               Padding(
                   padding: EdgeInsets.only(top: 24.h),
-                  child: const SearchBox()),
+                  child: SearchBox(
+                    controller: controller,
+                    onSubmitted: onSubmitted,
+                  )),
               Padding(
                   padding: EdgeInsets.only(top: 16.h),
                   child: const GenresTabBar()),

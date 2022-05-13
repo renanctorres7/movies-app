@@ -13,6 +13,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +37,12 @@ class _SearchPageState extends State<SearchPage> {
               children: [],
             ),
           ),
-          const SearchAppBar(),
+          SearchAppBar(
+            controller: textEditingController,
+            onSubmitted: (String? text) {
+              if (text != null && text.isNotEmpty) {}
+            },
+          ),
         ],
       ),
     );
