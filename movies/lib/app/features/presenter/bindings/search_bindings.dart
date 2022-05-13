@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:movies/app/features/presenter/stores/search_store.dart';
 
-import '../../domain/usecases/search_by_text.dart';
+final s1 = GetIt.instance;
 
 class SearchBindings implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => SearchStore(Get.find<SearchByTextImpl>()));
+    Get.put(SearchStore(s1()));
   }
 }

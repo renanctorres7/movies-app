@@ -9,6 +9,8 @@ class GenresStore extends GetxController {
   final SearchGenresUsecase usecase;
   GenresStore(this.usecase);
 
+
+
   Future<Either<Failure, List<SearchGenres>>> getGenresList() async {
     return await usecase();
   }
