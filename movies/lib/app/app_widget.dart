@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:movies/app/core/routes/app_pages.dart';
 import 'package:movies/app/core/theme/app_theme.dart';
 
 class AppWidget extends StatelessWidget {
@@ -13,12 +14,12 @@ class AppWidget extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (child) {
-          return MaterialApp.router(
+          return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Movies',
             theme: AppTheme.appTheme,
-            routeInformationParser: Modular.routeInformationParser,
-            routerDelegate: Modular.routerDelegate,
+            getPages: AppPages.pages,
+            defaultTransition: Transition.fade,
           );
         }); //added by extension
   }
