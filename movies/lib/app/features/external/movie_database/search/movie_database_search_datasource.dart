@@ -16,27 +16,29 @@ class MovieDatabaseSearchDatasource implements SearchResultsDatasource {
     final result = await client.get(Uri.parse(
         MovieDatabaseEndpoints.getUrlMovieSearch(
             MovieDatabaseApiKeys.apiKey, text)));
-
+    List<SearchResultsModel> list = [];
     if (result.statusCode == 200) {
       final json = jsonDecode(result.body);
       final jsonList = json['results'] as List;
-      final list = jsonList
-          .map((map) => SearchResultsModel(
-              posterPath: map['poster_path'],
-              adult: map['adult'],
-              overview: map['overview'],
-              releaseDate: map['release_date'],
-              genreIds: map['genre_ids'],
-              id: map['id'],
-              originalTitle: map['original_title'],
-              originalLanguage: map['original_language'],
-              title: map['title'],
-              backdropPath: map['backdrop_path'],
-              popularity: map['popularity'],
-              voteCount: map['vote_count'],
-              video: map['video'],
-              voteAverage: map['vote_average']))
-          .toList();
+
+      jsonList.asMap().forEach((key, value) async {
+        var map = jsonDecode(jsonEncode(value));
+        list.add(SearchResultsModel(
+            posterPath: map['poster_path'],
+            adult: map['adult'],
+            overview: map['overview'],
+            releaseDate: map['release_date'],
+            genreIds: map['genre_ids'],
+            id: map['id'],
+            originalTitle: map['original_title'],
+            originalLanguage: map['original_language'],
+            title: map['title'],
+            backdropPath: map['backdrop_path'],
+            popularity: map['popularity'],
+            voteCount: map['vote_count'],
+            video: map['video'],
+            voteAverage: map['vote_average']));
+      });
 
       return list;
     } else {

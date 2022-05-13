@@ -16,7 +16,7 @@ class SearchPage extends GetView<SearchStore> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -55,7 +55,7 @@ class SearchPage extends GetView<SearchStore> {
             controller: controller.textEditingController,
             onSubmitted: (String? text) {
               if (text != null && text.isNotEmpty) {
-                controller.getListResults(text);
+                controller.addToList(text);
               }
             },
           )
