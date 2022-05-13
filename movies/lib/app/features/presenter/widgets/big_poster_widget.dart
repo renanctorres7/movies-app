@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movies/app/core/utils/utils.dart';
 
 import '../../../core/theme/app_colors.dart';
 
@@ -41,7 +42,7 @@ class BigPosterWidget extends StatelessWidget {
                   },
                   blendMode: BlendMode.darken,
                   child: Image.network(
-                    imageUrl,
+                    Utils.trimUrlImage(imageUrl),
                     height: 430.h,
                     width: 300.w,
                     fit: BoxFit.cover,

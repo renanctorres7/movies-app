@@ -4,4 +4,6 @@ class MovieDatabaseEndpoints {
 
   static String getGenresSearch(String apiKey) =>
       'https://api.themoviedb.org/3/genre/movie/list?api_key=$apiKey&language=pt-BR';
+
+  static String baseImageUrl = "http://image.tmdb.org/t/p/original/";
 }
