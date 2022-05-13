@@ -1,10 +1,18 @@
+import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
-import 'package:movies/app/features/domain/usecases/search_by_text.dart';
+
+import '../../domain/entities/search_results.dart';
+import '../../domain/usecases/search_by_text.dart';
+
+import '../../domain/errors/errors.dart';
 
 class SearchStore extends GetxController {
-  late SearchByText usecase;
+  final SearchByText usecase;
 
-  getListResults(String text) async {
-    await usecase(text);
+  SearchStore(this.usecase);
+
+  Future<Either<Failure, List<SearchResults>>> getListResults(
+      String text) async {
+    return await usecase(text);
   }
 }

@@ -16,7 +16,7 @@ void main() {
 
   setUp(() {
     usecase = SearchByTextMock();
-    store = SearchStore();
+    store = SearchStore(usecase);
   });
 
   test('Should return a Search Results from the usecase', () async {
@@ -24,7 +24,7 @@ void main() {
 
     final result = await store.getListResults(text);
 
-    expect(result, testList);
+    expect(result, Right(testList));
     verify(() => usecase(text)).called(1);
   });
 
@@ -35,7 +35,7 @@ void main() {
 
     final result = await store.getListResults(text);
 
-    expect(result, ServerFailure());
+    expect(result, Left(ServerFailure()));
     verify(() => usecase(text)).called(1);
   });
 }

@@ -10,8 +10,6 @@ import 'package:movies/app/features/presenter/stores/genres_store.dart';
 
 class SearchGenresUsecaseMock extends Mock implements SearchGenresUsecase {}
 
-class GenresStoreMock extends GetxService with Mock implements GenresStore {}
-
 void main() {
   late GenresStore store;
   late SearchGenresUsecase usecase;
@@ -20,7 +18,7 @@ void main() {
 
   setUp(() {
     usecase = SearchGenresUsecaseMock();
-    store = GenresStoreMock();
+    store = Get.put(GenresStore(usecase));
   });
 
   test('Should return a Search Genres results from the usecase', () async {
@@ -28,7 +26,7 @@ void main() {
 
     final result = await store.getGenresList();
 
-    expect(result, testList);
+    expect(result, Right(testList));
     verify(() => usecase()).called(1);
   });
 
@@ -38,7 +36,7 @@ void main() {
 
     final result = await store.getGenresList();
 
-    expect(result, ServerFailure());
+    expect(result, Left(ServerFailure()));
     verify(() => usecase()).called(1);
   });
 }
