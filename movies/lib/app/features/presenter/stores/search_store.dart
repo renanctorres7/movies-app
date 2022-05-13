@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../domain/entities/search_results.dart';
@@ -10,6 +11,8 @@ class SearchStore extends GetxController {
   final SearchByText usecase;
 
   SearchStore(this.usecase);
+
+  TextEditingController textEditingController = TextEditingController();
 
   Future<Either<Failure, List<SearchResults>>> getListResults(
       String text) async {
