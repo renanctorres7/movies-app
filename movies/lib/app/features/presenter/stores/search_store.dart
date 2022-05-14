@@ -129,4 +129,16 @@ class SearchStore extends GetxController {
     genresDetailsPage.value =
         getGenresListNameByIdList(listResults[index].genreIds!);
   }
+
+  var genreSelectedIndex = 0.obs;
+  setGenreFilter(int index, String genreName) async {
+    genreSelectedIndex.value = index;
+    if (listResults.isNotEmpty) {
+      for (var item in listResults) {
+        if (!getGenresListNameByIdList(item.genreIds).contains(genreName)) {
+          listResults.remove(item);
+        }
+      }
+    }
+  }
 }
