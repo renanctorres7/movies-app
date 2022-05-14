@@ -32,15 +32,18 @@ class SearchStore extends GetxController {
     addGenresToList();
   }
 
+  var listGenresByName = <String>[].obs;
+
   addToList(String? text) async {
     loadingStatus.value = LoadingStatus.loading;
     listResults.clear();
+
     if (text != null && text.isNotEmpty) {
       final result = await getListResults(text);
       result.fold((failure) => null, (List<SearchResults>? value) async {
         if (value != null && value.isNotEmpty) {
           listResults.value = value;
-
+          getGenresByName();
           Future.delayed(const Duration(seconds: 1),
               () => loadingStatus.value = LoadingStatus.complete);
         } else if (value != null && value.isEmpty) {
@@ -72,7 +75,7 @@ class SearchStore extends GetxController {
     });
   }
 
-  List<String> getGenresListName(List? idList) {
+  List<String> getGenresListNameByIdList(List? idList) {
     List<String> list = [];
     if (genresList.isNotEmpty && idList != null && idList.isNotEmpty) {
       for (int i = 0; i < idList.length; i++) {
@@ -83,17 +86,26 @@ class SearchStore extends GetxController {
         }
       }
     }
-
     return list;
   }
 
-  var genresListNames = <String>[].obs;
   String getTwoGenresName(int index, int number) {
-    genresListNames.value = getGenresListName(listResults[index].genreIds!);
+    final list = getGenresListNameByIdList(listResults[index].genreIds!);
 
-    if (genresListNames.isNotEmpty) {
-      return genresListNames[number];
+    if (list.isNotEmpty) {
+      return list[number];
     }
     return '';
+  }
+
+  List<String> getGenresByName() {
+    listGenresByName.clear();
+    List list = [];
+    for (var item in listResults) {
+      list.addAll(item.genreIds!);
+    }
+    final result = list.toSet().toList();
+    listGenresByName.value = getGenresListNameByIdList(result);
+    return listGenresByName;
   }
 }

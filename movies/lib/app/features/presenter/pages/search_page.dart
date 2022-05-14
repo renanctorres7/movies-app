@@ -81,6 +81,7 @@ class SearchPage extends GetView<SearchStore> {
                 controller.addToList(text);
               }
             },
+            list: controller.listGenresByName,
           )
         ],
       ),
