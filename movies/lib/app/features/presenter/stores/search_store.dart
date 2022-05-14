@@ -129,15 +129,29 @@ class SearchStore extends GetxController {
 
   setDetails(int index) {
     genresDetailsPage.clear();
-    imageUrl.value = listResults[index].backdropPath ?? "";
-    title.value = listResults[index].title ?? "";
 
-    originalTitle.value = listResults[index].originalTitle ?? "";
-    popularity.value = listResults[index].voteAverage?.toDouble() ?? 0.0;
-    overview.value = listResults[index].overview ?? "";
-    year.value = listResults[index].releaseDate?.substring(0, 4) ?? "";
-    genresDetailsPage.value =
-        getGenresListNameByIdList(listResults[index].genreIds!);
+    if (genreFilterActive.value == false) {
+      imageUrl.value = listResults[index].backdropPath ?? "";
+      title.value = listResults[index].title ?? "";
+
+      originalTitle.value = listResults[index].originalTitle ?? "";
+      popularity.value = listResults[index].voteAverage?.toDouble() ?? 0.0;
+      overview.value = listResults[index].overview ?? "";
+      year.value = listResults[index].releaseDate?.substring(0, 4) ?? "";
+      genresDetailsPage.value =
+          getGenresListNameByIdList(listResults[index].genreIds!);
+    } else {
+      imageUrl.value = listResultsFilter[index].backdropPath ?? "";
+      title.value = listResultsFilter[index].title ?? "";
+
+      originalTitle.value = listResultsFilter[index].originalTitle ?? "";
+      popularity.value =
+          listResultsFilter[index].voteAverage?.toDouble() ?? 0.0;
+      overview.value = listResultsFilter[index].overview ?? "";
+      year.value = listResultsFilter[index].releaseDate?.substring(0, 4) ?? "";
+      genresDetailsPage.value =
+          getGenresListNameByIdList(listResultsFilter[index].genreIds!);
+    }
   }
 
   var genreSelectedIndex = 0.obs;
