@@ -14,10 +14,10 @@ class SearchResultsModel extends SearchResults {
       required String originalLanguage,
       required String title,
       required String backdropPath,
-      required double popularity,
+      required num popularity,
       required int voteCount,
       required bool video,
-      required double voteAverage})
+      required num voteAverage})
       : super(
             posterPath: posterPath,
             adult: adult,

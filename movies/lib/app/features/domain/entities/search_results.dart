@@ -15,13 +15,13 @@ class SearchResults {
   final String title;
 
   final String backdropPath;
-  final double popularity;
+  final num popularity;
 
   final int voteCount;
 
   final bool video;
 
-  final double voteAverage;
+  final num voteAverage;
 
   SearchResults(
       {required this.posterPath,
