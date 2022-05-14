@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 import 'package:movies/app/core/utils/loading_status.dart';
 import 'package:movies/app/features/presenter/stores/search_store.dart';
@@ -34,6 +35,16 @@ class SearchPage extends GetView<SearchStore> {
               padding: EdgeInsets.only(top: 130.h, left: 20.w, right: 20.w),
               child: Obx(() {
                 switch (controller.loadingStatus.value) {
+                  case LoadingStatus.empty:
+                    return Center(
+                      child: Text(
+                        "Nenhum resultado encontrado",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.colorGray01),
+                      ),
+                    );
                   case LoadingStatus.loading:
                     return const Center(
                       child: CircularProgressIndicator(
