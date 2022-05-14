@@ -90,12 +90,22 @@ class SearchStore extends GetxController {
   }
 
   String getTwoGenresName(int index, int number) {
-    final list = getGenresListNameByIdList(listResults[index].genreIds!);
+    if (genreFilterActive.value == false) {
+      final list = getGenresListNameByIdList(listResults[index].genreIds!);
 
-    if (list.isNotEmpty) {
-      return list[number];
+      if (list.isNotEmpty) {
+        return list[number];
+      }
+      return '';
+    } else {
+      final list =
+          getGenresListNameByIdList(listResultsFilter[index].genreIds!);
+
+      if (list.isNotEmpty) {
+        return list[number];
+      }
+      return '';
     }
-    return '';
   }
 
   List<String> getGenresByName() {
@@ -131,14 +141,23 @@ class SearchStore extends GetxController {
   }
 
   var genreSelectedIndex = 0.obs;
+  var genreFilterActive = false.obs;
+  var listResultsFilter = <SearchResults>[].obs;
+
   setGenreFilter(int index, String genreName) async {
+    listResultsFilter.clear();
+    loadingStatus.value = LoadingStatus.loading;
     genreSelectedIndex.value = index;
-    if (listResults.isNotEmpty) {
+    genreFilterActive.value = !genreFilterActive.value;
+    if (listResults.isNotEmpty && genreFilterActive.value == true) {
       for (var item in listResults) {
-        if (!getGenresListNameByIdList(item.genreIds).contains(genreName)) {
-          listResults.remove(item);
+        List list = getGenresListNameByIdList(item.genreIds);
+        if (list.contains(genreName)) {
+          listResultsFilter.add(item);
         }
       }
     }
+    Future.delayed(const Duration(seconds: 1),
+        () => loadingStatus.value = LoadingStatus.complete);
   }
 }

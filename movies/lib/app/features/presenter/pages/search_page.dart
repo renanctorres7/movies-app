@@ -55,24 +55,39 @@ class SearchPage extends GetView<SearchStore> {
                     );
                   case LoadingStatus.complete:
                     return ListView.builder(
-                      itemCount: controller.listResults.length,
+                      itemCount: controller.genreFilterActive.value == false
+                          ? controller.listResults.length
+                          : controller.listResultsFilter.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () {
                             controller.setDetails(index);
                             Get.toNamed(AppRoutes.details);
                           },
-                          child: BigPosterWidget(
-                              imageUrl:
-                                  controller.listResults[index].backdropPath ??
+                          child: controller.genreFilterActive.value == false
+                              ? BigPosterWidget(
+                                  imageUrl: controller
+                                          .listResults[index].backdropPath ??
                                       '',
-                              title: controller.listResults[index].title ?? '',
-                              genre1: controller.getTwoGenresName(index, 0),
-                              genre2: controller.listResults[index].genreIds!
-                                          .length >=
-                                      2
-                                  ? controller.getTwoGenresName(index, 1)
-                                  : ""),
+                                  title:
+                                      controller.listResults[index].title ?? '',
+                                  genre1: controller.getTwoGenresName(index, 0),
+                                  genre2: controller.listResults[index].genreIds!.length >= 2
+                                      ? controller.getTwoGenresName(index, 1)
+                                      : "")
+                              : BigPosterWidget(
+                                  imageUrl: controller.listResultsFilter[index]
+                                          .backdropPath ??
+                                      '',
+                                  title: controller
+                                          .listResultsFilter[index].title ??
+                                      '',
+                                  genre1: controller.getTwoGenresName(index, 0),
+                                  genre2: controller.listResultsFilter[index]
+                                              .genreIds!.length >=
+                                          2
+                                      ? controller.getTwoGenresName(index, 1)
+                                      : ""),
                         );
                       },
                     );

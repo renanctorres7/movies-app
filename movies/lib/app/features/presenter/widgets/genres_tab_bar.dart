@@ -29,33 +29,42 @@ class GenresTabBar extends GetView<SearchStore> {
                       },
                       child: Padding(
                         padding: EdgeInsets.only(right: 12.w),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color:
-                                  controller.genreSelectedIndex.value == index
-                                      ? AppColors.colorHighlight
-                                      : AppColors.colorWhite,
-                              border: Border.all(
-                                  color: AppColors.colorGray08, width: 1),
-                              borderRadius: BorderRadius.circular(26.r)),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 5.h),
-                            child: Obx(() {
-                              return Text(
-                                controller.listGenresByName[index].toString(),
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 12.sp,
-                                    color:
-                                        controller.genreSelectedIndex.value ==
+                        child: Obx(() {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color:
+                                    controller.genreFilterActive.value == true
+                                        ? controller.genreSelectedIndex.value ==
                                                 index
-                                            ? AppColors.colorWhite
-                                            : AppColors.colorHighlight,
-                                    fontWeight: FontWeight.w400),
-                              );
-                            }),
-                          ),
-                        ),
+                                            ? AppColors.colorHighlight
+                                            : AppColors.colorWhite
+                                        : AppColors.colorWhite,
+                                border: Border.all(
+                                    color: AppColors.colorGray08, width: 1),
+                                borderRadius: BorderRadius.circular(26.r)),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w, vertical: 5.h),
+                              child: Obx(() {
+                                return Text(
+                                  controller.listGenresByName[index].toString(),
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 12.sp,
+                                      color:
+                                          controller.genreFilterActive.value ==
+                                                  true
+                                              ? controller.genreSelectedIndex
+                                                          .value ==
+                                                      index
+                                                  ? AppColors.colorWhite
+                                                  : AppColors.colorHighlight
+                                              : AppColors.colorHighlight,
+                                      fontWeight: FontWeight.w400),
+                                );
+                              }),
+                            ),
+                          );
+                        }),
                       ),
                     );
                   })
