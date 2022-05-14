@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movies/app/core/routes/app_routes.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 import 'package:movies/app/core/utils/loading_status.dart';
 import 'package:movies/app/features/presenter/stores/search_store.dart';
@@ -56,17 +57,23 @@ class SearchPage extends GetView<SearchStore> {
                     return ListView.builder(
                       itemCount: controller.listResults.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return BigPosterWidget(
-                            imageUrl:
-                                controller.listResults[index].backdropPath ??
-                                    '',
-                            title: controller.listResults[index].title ?? '',
-                            genre1: controller.getTwoGenresName(index, 0),
-                            genre2: controller
-                                        .listResults[index].genreIds!.length >=
-                                    2
-                                ? controller.getTwoGenresName(index, 1)
-                                : "");
+                        return GestureDetector(
+                          onTap: () {
+                            controller.setDetails(index);
+                            Get.toNamed(AppRoutes.details);
+                          },
+                          child: BigPosterWidget(
+                              imageUrl:
+                                  controller.listResults[index].backdropPath ??
+                                      '',
+                              title: controller.listResults[index].title ?? '',
+                              genre1: controller.getTwoGenresName(index, 0),
+                              genre2: controller.listResults[index].genreIds!
+                                          .length >=
+                                      2
+                                  ? controller.getTwoGenresName(index, 1)
+                                  : ""),
+                        );
                       },
                     );
                   case LoadingStatus.none:

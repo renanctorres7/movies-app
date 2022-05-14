@@ -108,4 +108,25 @@ class SearchStore extends GetxController {
     listGenresByName.value = getGenresListNameByIdList(result);
     return listGenresByName;
   }
+
+  var imageUrl = ''.obs;
+  var title = ''.obs;
+  var originalTitle = ''.obs;
+  var popularity = 0.0.obs;
+  var overview = ''.obs;
+  var year = ''.obs;
+  var genresDetailsPage = <String>[].obs;
+
+  setDetails(int index) {
+    genresDetailsPage.clear();
+    imageUrl.value = listResults[index].backdropPath ?? "";
+    title.value = listResults[index].title ?? "";
+
+    originalTitle.value = listResults[index].originalTitle ?? "";
+    popularity.value = listResults[index].voteAverage?.toDouble() ?? 0.0;
+    overview.value = listResults[index].overview ?? "";
+    year.value = listResults[index].releaseDate?.substring(0, 4) ?? "";
+    genresDetailsPage.value =
+        getGenresListNameByIdList(listResults[index].genreIds!);
+  }
 }
