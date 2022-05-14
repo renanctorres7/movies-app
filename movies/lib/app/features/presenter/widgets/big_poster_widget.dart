@@ -85,12 +85,15 @@ class BigPosterWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
                         border: Border.all(color: AppColors.colorGray03)),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Icon(
-                        Icons.movie,
-                        size: 24.sp,
-                        color: AppColors.colorGray03,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 12.w, top: 12.h),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Icon(
+                          Icons.movie,
+                          size: 24.sp,
+                          color: AppColors.colorGray03,
+                        ),
                       ),
                     ),
                   ),
