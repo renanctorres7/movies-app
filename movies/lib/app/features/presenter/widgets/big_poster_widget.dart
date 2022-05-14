@@ -27,7 +27,7 @@ class BigPosterWidget extends StatelessWidget {
       ),
       child: Center(
         child: Stack(
-          alignment: Alignment.bottomLeft,
+          alignment: Alignment.bottomCenter,
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(10.r),
@@ -63,33 +63,38 @@ class BigPosterWidget extends StatelessWidget {
                     },
                   ),
                 )),
-            Container(
-                padding: EdgeInsets.only(left: 24.w, bottom: 32.h, right: 24.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        bottom: 12.h,
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                  width: double.infinity,
+                  padding:
+                      EdgeInsets.only(left: 24.w, bottom: 32.h, right: 24.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 12.h,
+                        ),
+                        child: Text(
+                          title,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.colorWhite),
+                        ),
                       ),
-                      child: Text(
-                        title,
+                      Text(
+                        '$genre1 - $genre2',
                         style: GoogleFonts.montserrat(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w400,
                             color: AppColors.colorWhite),
                       ),
-                    ),
-                    Text(
-                      '$genre1 - $genre2',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.colorWhite),
-                    ),
-                  ],
-                )),
+                    ],
+                  )),
+            ),
           ],
         ),
       ),
