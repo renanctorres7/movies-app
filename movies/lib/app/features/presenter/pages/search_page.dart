@@ -61,8 +61,8 @@ class SearchPage extends GetView<SearchStore> {
                                 controller.listResults[index].backdropPath ??
                                     '',
                             title: controller.listResults[index].title ?? '',
-                            genre1: 'teste',
-                            genre2: 'teste');
+                            genre1: controller.getTwoGenresName(index, 0),
+                            genre2: controller.getTwoGenresName(index, 1));
                       },
                     );
                   case LoadingStatus.none:

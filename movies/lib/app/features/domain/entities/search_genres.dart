@@ -1,6 +1,6 @@
 class SearchGenres {
-  final int id;
-  final String name;
+  final int? id;
+  final String? name;
 
-  SearchGenres({required this.id, required this.name});
+  SearchGenres({this.id, this.name});
 }

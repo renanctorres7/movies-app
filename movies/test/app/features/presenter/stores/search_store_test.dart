@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:movies/app/core/utils/dependency_creator.dart';
 import 'package:movies/app/features/domain/entities/search_results.dart';
 import 'package:movies/app/features/domain/errors/errors.dart';
 import 'package:movies/app/features/domain/usecases/search_by_text.dart';
@@ -16,7 +18,7 @@ void main() {
 
   setUp(() {
     usecase = SearchByTextMock();
-    store = SearchStore(usecase);
+    store = Get.put(SearchStore(usecase: s1(), genresUsecase: s1()));
   });
 
   test('Should return a Search Results from the usecase', () async {

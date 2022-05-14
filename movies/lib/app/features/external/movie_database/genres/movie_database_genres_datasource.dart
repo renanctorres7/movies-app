@@ -15,12 +15,16 @@ class MovieDatabaseGenresDatasource implements SearchGenresDatasource {
   Future<List<SearchGenresModel>> searchGenres() async {
     final result = await client.get(Uri.parse(
         MovieDatabaseEndpoints.getGenresSearch(MovieDatabaseApiKeys.apiKey)));
+
+    List<SearchGenresModel> list = [];
     if (result.statusCode == 200) {
       final json = jsonDecode(result.body);
       final jsonList = json['genres'] as List;
-      final list = jsonList
-          .map((map) => SearchGenresModel(id: map['id'], name: map['name']))
-          .toList();
+
+      jsonList.asMap().forEach((key, value) async {
+        var map = jsonDecode(jsonEncode(value));
+        list.add(SearchGenresModel(id: map['id'], name: map['name']));
+      });
 
       return list;
     } else {

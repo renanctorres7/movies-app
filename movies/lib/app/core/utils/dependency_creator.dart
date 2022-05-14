@@ -26,7 +26,7 @@ class DependencyCreator {
         SearchResultsRepositoryImpl(s1()));
     s1.registerSingleton<SearchGenresRepository>(
         SearchGenresRepositoryImpl(s1()));
-    s1.registerSingleton(() => SearchGenresUsecaseImpl(s1()));
+    s1.registerSingleton<SearchGenresUsecase>(SearchGenresUsecaseImpl(s1()));
     s1.registerSingleton<SearchByText>(SearchByTextImpl(s1()));
   }
 }

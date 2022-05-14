@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:movies/app/features/domain/entities/search_genres.dart';
 
 class SearchGenresModel extends SearchGenres {
-  SearchGenresModel({required int id, required String name})
-      : super(id: id, name: name);
+  SearchGenresModel({int? id, String? name}) : super(id: id, name: name);
 
   Map<String, dynamic> toMap() {
     return {'id': id, 'name': name};

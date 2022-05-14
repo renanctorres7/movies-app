@@ -7,6 +7,6 @@ final s1 = GetIt.instance;
 class SearchBindings implements Bindings {
   @override
   void dependencies() {
-    Get.put(SearchStore(s1()));
+    Get.put(SearchStore(usecase: s1(), genresUsecase: s1()));
   }
 }
