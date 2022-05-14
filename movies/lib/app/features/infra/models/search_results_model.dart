@@ -4,20 +4,20 @@ import 'package:movies/app/features/domain/entities/search_results.dart';
 
 class SearchResultsModel extends SearchResults {
   SearchResultsModel(
-      {required String posterPath,
-      required bool adult,
-      required String overview,
-      required String releaseDate,
-      required List genreIds,
-      required int id,
-      required String originalTitle,
-      required String originalLanguage,
-      required String title,
-      required String backdropPath,
-      required num popularity,
-      required int voteCount,
-      required bool video,
-      required num voteAverage})
+      {String? posterPath,
+      bool? adult,
+      String? overview,
+      String? releaseDate,
+      List? genreIds,
+      int? id,
+      String? originalTitle,
+      String? originalLanguage,
+      String? title,
+      String? backdropPath,
+      num? popularity,
+      int? voteCount,
+      bool? video,
+      num? voteAverage})
       : super(
             posterPath: posterPath,
             adult: adult,

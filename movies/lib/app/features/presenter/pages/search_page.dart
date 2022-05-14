@@ -13,6 +13,7 @@ class SearchPage extends GetView<SearchStore> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -27,28 +28,35 @@ class SearchPage extends GetView<SearchStore> {
       body: Stack(
         children: [
           Container(
+              width: size.width,
+              height: size.height,
               color: AppColors.colorWhite,
               padding: EdgeInsets.only(top: 130.h, left: 20.w, right: 20.w),
               child: Obx(() {
                 switch (controller.loadingStatus.value) {
                   case LoadingStatus.loading:
-                    return const CircularProgressIndicator(
-                      color: AppColors.colorGray08,
-                      strokeWidth: 4,
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.colorHighlight,
+                        strokeWidth: 6,
+                      ),
                     );
                   case LoadingStatus.complete:
-                  default:
                     return ListView.builder(
                       itemCount: controller.listResults.length,
                       itemBuilder: (BuildContext context, int index) {
                         return BigPosterWidget(
                             imageUrl:
-                                controller.listResults[index].backdropPath,
-                            title: controller.listResults[index].title,
+                                controller.listResults[index].backdropPath ??
+                                    '',
+                            title: controller.listResults[index].title ?? '',
                             genre1: 'teste',
                             genre2: 'teste');
                       },
                     );
+                  case LoadingStatus.none:
+                  default:
+                    return const SizedBox();
                 }
               })),
           SearchAppBar(

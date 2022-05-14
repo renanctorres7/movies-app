@@ -1,41 +1,41 @@
 class SearchResults {
-  final String posterPath;
-  final bool adult;
-  final String overview;
+  final String? posterPath;
+  final bool? adult;
+  final String? overview;
 
-  final String releaseDate;
+  final String? releaseDate;
 
-  final List genreIds;
-  final int id;
+  final List? genreIds;
+  final int? id;
 
-  final String originalTitle;
+  final String? originalTitle;
 
-  final String originalLanguage;
+  final String? originalLanguage;
 
-  final String title;
+  final String? title;
 
-  final String backdropPath;
-  final num popularity;
+  final String? backdropPath;
+  final num? popularity;
 
-  final int voteCount;
+  final int? voteCount;
 
-  final bool video;
+  final bool? video;
 
-  final num voteAverage;
+  final num? voteAverage;
 
   SearchResults(
-      {required this.posterPath,
-      required this.adult,
-      required this.overview,
-      required this.releaseDate,
-      required this.genreIds,
-      required this.id,
-      required this.originalTitle,
-      required this.originalLanguage,
-      required this.title,
-      required this.backdropPath,
-      required this.popularity,
-      required this.voteCount,
-      required this.video,
-      required this.voteAverage});
+      {this.posterPath,
+      this.adult,
+      this.overview,
+      this.releaseDate,
+      this.genreIds,
+      this.id,
+      this.originalTitle,
+      this.originalLanguage,
+      this.title,
+      this.backdropPath,
+      this.popularity,
+      this.voteCount,
+      this.video,
+      this.voteAverage});
 }

@@ -21,6 +21,7 @@ class BigPosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Padding(
       padding: EdgeInsets.only(
         bottom: 16.h,
@@ -29,40 +30,70 @@ class BigPosterWidget extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(10.r),
-                child: ShaderMask(
-                  shaderCallback: (rect) {
-                    return const LinearGradient(
-                      begin: Alignment.center,
-                      end: Alignment.bottomCenter,
-                      colors: [Colors.transparent, Colors.black],
-                    ).createShader(
-                        Rect.fromLTRB(0, 0, rect.width, rect.height));
-                  },
-                  blendMode: BlendMode.darken,
-                  child: Image.network(
-                    Utils.trimUrlImage(imageUrl),
-                    height: 430.h,
+            imageUrl.isNotEmpty
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(10.r),
+                    child: ShaderMask(
+                      shaderCallback: (rect) {
+                        return const LinearGradient(
+                          begin: Alignment.center,
+                          end: Alignment.bottomCenter,
+                          colors: [Colors.transparent, Colors.black],
+                        ).createShader(
+                            Rect.fromLTRB(0, 0, rect.width, rect.height));
+                      },
+                      blendMode: BlendMode.darken,
+                      child: imageUrl.isNotEmpty
+                          ? Image.network(
+                              Utils.trimUrlImage(imageUrl),
+                              height: 430.h,
+                              width: 300.w,
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return SizedBox(
+                                  width: size.width,
+                                  height: size.height,
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: SizedBox(
+                                      width: 200.w,
+                                      child: LinearProgressIndicator(
+                                        color: AppColors.colorGray03,
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : const SizedBox(),
+                    ))
+                : Container(
                     width: 300.w,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.colorGray08,
-                          strokeWidth: 4,
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
+                    height: 250.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(color: AppColors.colorGray03)),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Icon(
+                        Icons.movie,
+                        size: 24.sp,
+                        color: AppColors.colorGray03,
+                      ),
+                    ),
                   ),
-                )),
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
@@ -82,7 +113,9 @@ class BigPosterWidget extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.colorWhite),
+                              color: imageUrl.isNotEmpty
+                                  ? AppColors.colorWhite
+                                  : AppColors.colorGray01),
                         ),
                       ),
                       Text(
@@ -90,7 +123,9 @@ class BigPosterWidget extends StatelessWidget {
                         style: GoogleFonts.montserrat(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.colorWhite),
+                            color: imageUrl.isNotEmpty
+                                ? AppColors.colorWhite
+                                : AppColors.colorGray01),
                       ),
                     ],
                   )),

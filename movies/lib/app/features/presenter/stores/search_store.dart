@@ -21,7 +21,7 @@ class SearchStore extends GetxController {
   }
 
   var listResults = <SearchResults>[].obs;
-  var loadingStatus = LoadingStatus.loading.obs;
+  var loadingStatus = LoadingStatus.none.obs;
 
   addToList(String? text) async {
     loadingStatus.value = LoadingStatus.loading;
@@ -30,15 +30,20 @@ class SearchStore extends GetxController {
       final result = await getListResults(text);
       result.fold((failure) => null, (List<SearchResults>? value) {
         if (value != null && value.isNotEmpty) {
-          loadingStatus.value = LoadingStatus.complete;
           listResults.value = value;
+          Future.delayed(const Duration(seconds: 1),
+              () => loadingStatus.value = LoadingStatus.complete);
         } else if (value != null && value.isEmpty) {
-          loadingStatus.value = LoadingStatus.empty;
+          Future.delayed(const Duration(seconds: 1),
+              () => loadingStatus.value = LoadingStatus.empty);
         } else if (value == null) {
-          loadingStatus.value = LoadingStatus.error;
+          Future.delayed(const Duration(seconds: 1),
+              () => loadingStatus.value = LoadingStatus.error);
+        } else {
+          Future.delayed(const Duration(seconds: 1),
+              () => loadingStatus.value = LoadingStatus.none);
         }
       });
     }
-    loadingStatus.value = LoadingStatus.complete;
   }
 }

@@ -2,6 +2,10 @@ import 'package:movies/app/features/external/movie_database/endpoints/movie_data
 
 class Utils {
   static String trimUrlImage(String imageUrl) {
-    return MovieDatabaseEndpoints.baseImageUrl + imageUrl.replaceAll("/", "");
+    if (imageUrl.isNotEmpty) {
+      return MovieDatabaseEndpoints.baseImageUrl + imageUrl.replaceAll("/", "");
+    } else {
+      return '';
+    }
   }
 }
