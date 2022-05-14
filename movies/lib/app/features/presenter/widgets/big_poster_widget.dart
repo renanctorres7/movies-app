@@ -122,7 +122,7 @@ class BigPosterWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '$genre1 - $genre2',
+                        genre1 + '- $genre2',
                         style: GoogleFonts.montserrat(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w400,

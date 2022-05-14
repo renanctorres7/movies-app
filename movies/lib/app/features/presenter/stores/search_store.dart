@@ -91,7 +91,7 @@ class SearchStore extends GetxController {
   String getTwoGenresName(int index, int number) {
     genresListNames.value = getGenresListName(listResults[index].genreIds!);
 
-    if (genresListNames.isNotEmpty && genresListNames.length >= 2) {
+    if (genresListNames.isNotEmpty) {
       return genresListNames[number];
     }
     return '';

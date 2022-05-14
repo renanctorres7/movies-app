@@ -62,7 +62,11 @@ class SearchPage extends GetView<SearchStore> {
                                     '',
                             title: controller.listResults[index].title ?? '',
                             genre1: controller.getTwoGenresName(index, 0),
-                            genre2: controller.getTwoGenresName(index, 1));
+                            genre2: controller
+                                        .listResults[index].genreIds!.length >=
+                                    2
+                                ? controller.getTwoGenresName(index, 1)
+                                : "");
                       },
                     );
                   case LoadingStatus.none:
