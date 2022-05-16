@@ -43,7 +43,7 @@ class SearchStore extends GetxController {
       result.fold((failure) => null, (List<SearchResults>? value) async {
         if (value != null && value.isNotEmpty) {
           listResults.value = value;
-          getGenresByName();
+          addSpecificGenresNameToList();
           Future.delayed(const Duration(seconds: 1),
               () => loadingStatus.value = LoadingStatus.complete);
         } else if (value != null && value.isEmpty) {
@@ -89,7 +89,7 @@ class SearchStore extends GetxController {
     return list;
   }
 
-  String getTwoGenresName(int index, int number) {
+  String getSpecificGenreName(int index, int number) {
     if (genreFilterActive.value == false) {
       final list = getGenresListNameByIdList(listResults[index].genreIds!);
 
@@ -108,7 +108,7 @@ class SearchStore extends GetxController {
     }
   }
 
-  List<String> getGenresByName() {
+  List<String> addSpecificGenresNameToList() {
     listGenresByName.clear();
     List list = [];
     for (var item in listResults) {
@@ -127,7 +127,7 @@ class SearchStore extends GetxController {
   var year = ''.obs;
   var genresDetailsPage = <String>[].obs;
 
-  setDetails(int index) {
+  setDataToDetailsPage(int index) {
     genresDetailsPage.clear();
 
     if (genreFilterActive.value == false) {

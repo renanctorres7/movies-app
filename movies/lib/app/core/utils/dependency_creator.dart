@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:movies/app/features/domain/repositories/search_genres_repository.dart';
 import 'package:movies/app/features/domain/repositories/search_results_repository.dart';

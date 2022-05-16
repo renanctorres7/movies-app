@@ -11,7 +11,6 @@ class GenresDetailsPageWidget extends StatelessWidget {
   final List list;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SizedBox(
       width: 300.w,
       height: 30.h,

@@ -61,7 +61,7 @@ class SearchPage extends GetView<SearchStore> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () {
-                            controller.setDetails(index);
+                            controller.setDataToDetailsPage(index);
                             Get.toNamed(AppRoutes.details);
                           },
                           child: controller.genreFilterActive.value == false
@@ -71,9 +71,9 @@ class SearchPage extends GetView<SearchStore> {
                                       '',
                                   title:
                                       controller.listResults[index].title ?? '',
-                                  genre1: controller.getTwoGenresName(index, 0),
+                                  genre1: controller.getSpecificGenreName(index, 0),
                                   genre2: controller.listResults[index].genreIds!.length >= 2
-                                      ? controller.getTwoGenresName(index, 1)
+                                      ? controller.getSpecificGenreName(index, 1)
                                       : "")
                               : BigPosterWidget(
                                   imageUrl: controller.listResultsFilter[index]
@@ -82,11 +82,11 @@ class SearchPage extends GetView<SearchStore> {
                                   title: controller
                                           .listResultsFilter[index].title ??
                                       '',
-                                  genre1: controller.getTwoGenresName(index, 0),
+                                  genre1: controller.getSpecificGenreName(index, 0),
                                   genre2: controller.listResultsFilter[index]
                                               .genreIds!.length >=
                                           2
-                                      ? controller.getTwoGenresName(index, 1)
+                                      ? controller.getSpecificGenreName(index, 1)
                                       : ""),
                         );
                       },
