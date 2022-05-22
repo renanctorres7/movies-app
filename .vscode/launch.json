@@ -14,21 +14,24 @@
       "name": "movies",
       "cwd": "movies",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "toolArgs": ["--dart-define", "apiKey=90b54ac501915fe2ddfc377b2ac571d7"]
     },
     {
       "name": "movies (profile mode)",
       "cwd": "movies",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
+      "flutterMode": "profile",
+      "toolArgs": ["--dart-define", "apiKey=90b54ac501915fe2ddfc377b2ac571d7"]
     },
     {
       "name": "movies (release mode)",
       "cwd": "movies",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
+      "flutterMode": "release",
+      "toolArgs": ["--dart-define", "apiKey=90b54ac501915fe2ddfc377b2ac571d7"]
     }
   ]
 }
