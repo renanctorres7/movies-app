@@ -19,11 +19,11 @@ class MovieDatabaseGenresDatasource implements SearchGenresDatasource {
     List<SearchGenresModel> list = [];
     if (result.statusCode == 200) {
       final json = jsonDecode(result.body);
-      final jsonList = json['genres'] as List;
+      final jsonList = json['genres'];
 
       jsonList.asMap().forEach((key, value) async {
         var map = jsonDecode(jsonEncode(value));
-        list.add(SearchGenresModel(id: map['id'], name: map['name']));
+        list.add(SearchGenresModel.fromJson(map));
       });
 
       return list;

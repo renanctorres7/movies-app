@@ -167,8 +167,7 @@ class DetailsPage extends GetView<SearchStore> {
                           padding: EdgeInsets.only(top: 12.h),
                           child: Obx(() {
                             return Text(
-                                'Título original: ' +
-                                    controller.originalTitle.value,
+                                'Título original: ${controller.originalTitle.value}',
                                 style: GoogleFonts.montserrat(
                                   fontSize: 10.sp,
                                   color: AppColors.colorGray02,

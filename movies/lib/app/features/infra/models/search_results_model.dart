@@ -1,78 +1,29 @@
-import 'dart:convert';
-
+import 'package:json_annotation/json_annotation.dart';
 import 'package:movies/app/features/domain/entities/search_results.dart';
 
+part 'search_results_model.g.dart';
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class SearchResultsModel extends SearchResults {
   SearchResultsModel(
-      {String? posterPath,
-      bool? adult,
-      String? overview,
+      {String? overview,
       String? releaseDate,
       List? genreIds,
-      int? id,
       String? originalTitle,
-      String? originalLanguage,
       String? title,
       String? backdropPath,
-      num? popularity,
-      int? voteCount,
-      bool? video,
       num? voteAverage})
       : super(
-            posterPath: posterPath,
-            adult: adult,
             overview: overview,
             releaseDate: releaseDate,
             genreIds: genreIds,
-            id: id,
             originalTitle: originalTitle,
-            originalLanguage: originalLanguage,
             title: title,
             backdropPath: backdropPath,
-            popularity: popularity,
-            voteCount: voteCount,
-            video: video,
             voteAverage: voteAverage);
 
-  Map<String, dynamic> toMap() {
-    return {
-      'posterPath': posterPath,
-      'adult': adult,
-      'overview': overview,
-      'releaseDate': releaseDate,
-      'genreIds': genreIds,
-      'id': id,
-      'originalTitle': originalTitle,
-      'originalLanguage': originalLanguage,
-      'title': title,
-      'backdropPath': backdropPath,
-      'popularity': popularity,
-      'voteCount': voteCount,
-      'video': video,
-      'voteAverage': voteAverage
-    };
-  }
+  factory SearchResultsModel.fromJson(Map<String, dynamic> json) =>
+      _$SearchResultsModelFromJson(json);
 
-  static SearchResultsModel fromMap(Map<String, dynamic> map) {
-    return SearchResultsModel(
-        posterPath: map['poster_path'],
-        adult: map['adult'],
-        overview: map['overview'],
-        releaseDate: map['release_date'],
-        genreIds: map['genre_ids'],
-        id: map['id'],
-        originalTitle: map['original_title'],
-        originalLanguage: map['original_language'],
-        title: map['title'],
-        backdropPath: map['backdrop_path'],
-        popularity: map['popularity'],
-        voteCount: map['vote_count'],
-        video: map['video'],
-        voteAverage: map['vote_average']);
-  }
-
-  String toJson() => jsonEncode(toMap());
-
-  static SearchResultsModel fromJson(String source) =>
-      fromMap(jsonDecode(source));
+  Map<String, dynamic> toJson() => _$SearchResultsModelToJson(this);
 }

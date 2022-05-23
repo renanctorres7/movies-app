@@ -66,23 +66,23 @@ class SearchPage extends GetView<SearchStore> {
                           },
                           child: controller.genreFilterActive.value == false
                               ? BigPosterWidget(
-                                  imageUrl: controller
-                                          .listResults[index].backdropPath ??
-                                      '',
+                                  imageUrl: controller.listResults[index].backdropPath ??
+                                      "",
                                   title:
-                                      controller.listResults[index].title ?? '',
-                                  genre1: controller.getSpecificGenreName(index, 0),
+                                      controller.listResults[index].title ?? "",
+                                  genre1:
+                                      controller.getSpecificGenreName(index, 0),
                                   genre2: controller.listResults[index].genreIds!.length >= 2
-                                      ? controller.getSpecificGenreName(index, 1)
+                                      ? controller.getSpecificGenreName(
+                                          index, 1)
                                       : "")
                               : BigPosterWidget(
-                                  imageUrl: controller.listResultsFilter[index]
-                                          .backdropPath ??
-                                      '',
-                                  title: controller
-                                          .listResultsFilter[index].title ??
-                                      '',
-                                  genre1: controller.getSpecificGenreName(index, 0),
+                                  imageUrl: controller
+                                      .listResultsFilter[index].backdropPath??"",
+                                  title:
+                                      controller.listResultsFilter[index].title??"",
+                                  genre1:
+                                      controller.getSpecificGenreName(index, 0),
                                   genre2: controller.listResultsFilter[index]
                                               .genreIds!.length >=
                                           2

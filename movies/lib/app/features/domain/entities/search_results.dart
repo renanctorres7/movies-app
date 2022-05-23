@@ -1,41 +1,24 @@
 class SearchResults {
-  final String? posterPath;
-  final bool? adult;
-  final String? overview;
+  String? overview;
 
-  final String? releaseDate;
+  String? releaseDate;
 
-  final List? genreIds;
-  final int? id;
+  List? genreIds;
 
-  final String? originalTitle;
+  String? originalTitle;
 
-  final String? originalLanguage;
+  String? title;
 
-  final String? title;
+  String? backdropPath;
 
-  final String? backdropPath;
-  final num? popularity;
-
-  final int? voteCount;
-
-  final bool? video;
-
-  final num? voteAverage;
+  num? voteAverage;
 
   SearchResults(
-      {this.posterPath,
-      this.adult,
-      this.overview,
+      {this.overview,
       this.releaseDate,
       this.genreIds,
-      this.id,
       this.originalTitle,
-      this.originalLanguage,
       this.title,
       this.backdropPath,
-      this.popularity,
-      this.voteCount,
-      this.video,
       this.voteAverage});
 }

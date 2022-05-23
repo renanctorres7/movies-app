@@ -1,20 +1,15 @@
-import 'dart:convert';
-
+import 'package:json_annotation/json_annotation.dart';
 import 'package:movies/app/features/domain/entities/search_genres.dart';
 
+part 'search_genres_model.g.dart';
+
+@JsonSerializable()
 class SearchGenresModel extends SearchGenres {
-  SearchGenresModel({int? id, String? name}) : super(id: id, name: name);
+  SearchGenresModel({required int id, required String name})
+      : super(id: id, name: name);
 
-  Map<String, dynamic> toMap() {
-    return {'id': id, 'name': name};
-  }
+  factory SearchGenresModel.fromJson(Map<String, dynamic> json) =>
+      _$SearchGenresModelFromJson(json);
 
-  static SearchGenresModel fromMap(Map<String, dynamic> map) {
-    return SearchGenresModel(id: map['id'], name: map['name']);
-  }
-
-  String toJson() => jsonEncode(toMap());
-
-  static SearchGenresModel fromJson(String source) =>
-      fromMap(jsonDecode(source));
+  Map<String, dynamic> toJson() => _$SearchGenresModelToJson(this);
 }

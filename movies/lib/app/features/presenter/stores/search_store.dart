@@ -20,7 +20,8 @@ class SearchStore extends GetxController {
 
   Future<Either<Failure, List<SearchResults>>> getListResults(
       String text) async {
-    return await usecase(text);
+    final result = await usecase(text);
+    return result;
   }
 
   var listResults = <SearchResults>[].obs;
@@ -34,27 +35,24 @@ class SearchStore extends GetxController {
 
   var listGenresByName = <String>[].obs;
 
-  addToList(String? text) async {
+  addToList(String text) async {
     loadingStatus.value = LoadingStatus.loading;
     listResults.clear();
 
-    if (text != null && text.isNotEmpty) {
+    if (text.isNotEmpty) {
       final result = await getListResults(text);
-      result.fold((failure) => null, (List<SearchResults>? value) async {
-        if (value != null && value.isNotEmpty) {
+      result.fold((failure) => null, (List<SearchResults> value) async {
+        if (value.isNotEmpty) {
           listResults.value = value;
           addSpecificGenresNameToList();
           Future.delayed(const Duration(seconds: 1),
               () => loadingStatus.value = LoadingStatus.complete);
-        } else if (value != null && value.isEmpty) {
+        } else if (value.isEmpty) {
           Future.delayed(const Duration(seconds: 1),
               () => loadingStatus.value = LoadingStatus.empty);
-        } else if (value == null) {
-          Future.delayed(const Duration(seconds: 1),
-              () => loadingStatus.value = LoadingStatus.error);
         } else {
           Future.delayed(const Duration(seconds: 1),
-              () => loadingStatus.value = LoadingStatus.none);
+              () => loadingStatus.value = LoadingStatus.error);
         }
       });
     }
@@ -63,25 +61,26 @@ class SearchStore extends GetxController {
   var genresList = <SearchGenres>[].obs;
 
   Future<Either<Failure, List<SearchGenres>>> getGenresList() async {
-    return await genresUsecase();
+    final result = await genresUsecase();
+    return result;
   }
 
   addGenresToList() async {
     final result = await getGenresList();
-    result.fold((failure) => null, (List<SearchGenres>? value) {
-      if (value != null && value.isNotEmpty) {
+    result.fold((failure) => null, (List<SearchGenres> value) {
+      if (value.isNotEmpty) {
         genresList.addAll(value);
       }
     });
   }
 
-  List<String> getGenresListNameByIdList(List? idList) {
+  List<String> getGenresListNameByIdList(List idList) {
     List<String> list = [];
-    if (genresList.isNotEmpty && idList != null && idList.isNotEmpty) {
+    if (genresList.isNotEmpty && idList.isNotEmpty) {
       for (int i = 0; i < idList.length; i++) {
         for (var element in genresList) {
           if (idList[i] == element.id) {
-            list.add(element.name ?? "");
+            list.add(element.name);
           }
         }
       }
@@ -135,7 +134,7 @@ class SearchStore extends GetxController {
       title.value = listResults[index].title ?? "";
 
       originalTitle.value = listResults[index].originalTitle ?? "";
-      popularity.value = listResults[index].voteAverage?.toDouble() ?? 0.0;
+      popularity.value = listResults[index].voteAverage?.toDouble() ?? 0;
       overview.value = listResults[index].overview ?? "";
       year.value = listResults[index].releaseDate?.substring(0, 4) ?? "";
       genresDetailsPage.value =
@@ -145,8 +144,7 @@ class SearchStore extends GetxController {
       title.value = listResultsFilter[index].title ?? "";
 
       originalTitle.value = listResultsFilter[index].originalTitle ?? "";
-      popularity.value =
-          listResultsFilter[index].voteAverage?.toDouble() ?? 0.0;
+      popularity.value = listResultsFilter[index].voteAverage?.toDouble() ?? 0;
       overview.value = listResultsFilter[index].overview ?? "";
       year.value = listResultsFilter[index].releaseDate?.substring(0, 4) ?? "";
       genresDetailsPage.value =
@@ -165,7 +163,7 @@ class SearchStore extends GetxController {
     genreFilterActive.value = !genreFilterActive.value;
     if (listResults.isNotEmpty && genreFilterActive.value == true) {
       for (var item in listResults) {
-        List list = getGenresListNameByIdList(item.genreIds);
+        List list = getGenresListNameByIdList(item.genreIds!);
         if (list.contains(genreName)) {
           listResultsFilter.add(item);
         }
