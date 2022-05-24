@@ -21,7 +21,7 @@ class MovieDatabaseGenresDatasource implements SearchGenresDatasource {
       final json = jsonDecode(result.body);
       final jsonList = json['genres'];
 
-      jsonList.asMap().forEach((key, value) async {
+      jsonList.asMap().forEach((key, value) {
         var map = jsonDecode(jsonEncode(value));
         list.add(SearchGenresModel.fromJson(map));
       });

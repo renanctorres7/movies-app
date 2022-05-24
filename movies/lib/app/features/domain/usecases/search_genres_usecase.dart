@@ -14,6 +14,7 @@ class SearchGenresUsecaseImpl implements SearchGenresUsecase {
   SearchGenresUsecaseImpl(this.repository);
   @override
   Future<Either<Failure, List<SearchGenres>>> call() async {
-    return await repository.getGenresList();
+    final result = await repository.getGenresList();
+    return result;
   }
 }

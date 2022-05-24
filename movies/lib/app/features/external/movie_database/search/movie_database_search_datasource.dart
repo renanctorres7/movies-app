@@ -20,7 +20,7 @@ class MovieDatabaseSearchDatasource implements SearchResultsDatasource {
       final json = jsonDecode(result.body);
       final jsonList = json['results'] as List;
 
-      jsonList.asMap().forEach((key, value) async {
+      jsonList.asMap().forEach((key, value) {
         var map = jsonDecode(jsonEncode(value));
         list.add(SearchResultsModel.fromJson(map));
       });

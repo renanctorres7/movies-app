@@ -41,7 +41,7 @@ class SearchStore extends GetxController {
 
     if (text.isNotEmpty) {
       final result = await getListResults(text);
-      result.fold((failure) => null, (List<SearchResults> value) async {
+      result.fold((failure) => null, (List<SearchResults> value) {
         if (value.isNotEmpty) {
           listResults.value = value;
           addSpecificGenresNameToList();
@@ -156,7 +156,7 @@ class SearchStore extends GetxController {
   var genreFilterActive = false.obs;
   var listResultsFilter = <SearchResults>[].obs;
 
-  setGenreFilter(int index, String genreName) async {
+  setGenreFilter(int index, String genreName) {
     listResultsFilter.clear();
     loadingStatus.value = LoadingStatus.loading;
     genreSelectedIndex.value = index;
