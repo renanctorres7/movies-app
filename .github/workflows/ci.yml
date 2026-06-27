@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - 'movies/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    paths:
+      - 'movies/**'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: movies
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+
+      - name: Test
+        run: flutter test

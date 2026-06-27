@@ -1,11 +1,47 @@
-# Movies app
+# Movies App
 
-App simples para busca de filmes e filtrar por gêneros, usando a API do The Movie Database (https://developers.themoviedb.org/3/search/search-movies).
+App Flutter de busca de filmes usando a [API do TMDB](https://developers.themoviedb.org/3), construído com **Clean Architecture**, **GetIt**, **GetX** e testes unitários por camada.
 
-A simple app to search movies and filter genres, using The Movie Database API (https://developers.themoviedb.org/3/search/search-movies)
+## Estrutura do repositório
 
-## Getting Started
+```
+movies-app/          ← repositório Git (origin: renanctorres7/movies-app)
+├── movies/          ← app Flutter
+├── .vscode/
+└── README.md
+```
 
-A proposta do app é estudar teste unitário, Clean Architecture e Clean Code. Usei GetX e GetIt para injeção de dependências e gerenciador de estados.
+> A pasta `agenda-consultorio/` acima é apenas um diretório local de organização — o Git está em `movies-app/`.
 
-The app propose is to study unit test, Clean Architecture and Clean Code.I used GetX and GetIt to dependency injection and state manager.
+## Configuração
+
+```bash
+cd movies
+cp dart_defines.example.json dart_defines.json
+# Edite dart_defines.json com sua chave TMDB
+flutter pub get
+flutter run --dart-define-from-file=dart_defines.json
+```
+
+## Testes
+
+```bash
+cd movies
+flutter analyze --no-fatal-infos
+flutter test
+```
+
+## Arquitetura
+
+- `domain/` — entities, failures, use cases, contratos
+- `infra/` — models, repositories, contratos de datasource
+- `external/` — TMDB HTTP, config, image builder
+- `presenter/` — pages, widgets, store (GetX)
+- `core/` — DI (GetIt), rotas, tema
+
+## Decisões técnicas
+
+- `Either<Failure, T>` para erros funcionais
+- Models com `toEntity()` — separação JSON/domain
+- `ImageUrlBuilder` — presenter desacoplado de endpoints TMDB
+- `MovieDetailsArgs` — navegação via argumentos de rota

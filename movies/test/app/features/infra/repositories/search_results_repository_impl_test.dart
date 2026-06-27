@@ -12,40 +12,46 @@ class SearchResultsDatasourceMock extends Mock
 void main() {
   final datasource = SearchResultsDatasourceMock();
   final repository = SearchResultsRepositoryImpl(datasource);
-  String text = 'teste';
+  const text = 'teste';
 
-  List<SearchResultsModel> testList = [
+  final testList = [
     SearchResultsModel(
-      overview:
-          "Feature-length documentary about the rise of Marvel Studios and their films leading up to, and including, The Avengers.",
-      releaseDate: "2012-09-25",
+      overview: 'Overview',
+      releaseDate: '2012-09-25',
       genreIds: [99],
-      originalTitle: "Marvel Studios: Building a Cinematic Universe",
-      title: "Marvel Studios: Building a Cinematic Universe",
-      backdropPath: "/yeKT2gNFxHGbTT3Htj5PE9IerGJ.jpg",
+      originalTitle: 'Original',
+      title: 'Title',
+      backdropPath: '/path.jpg',
       voteAverage: 3.88,
-    )
+    ),
   ];
-  test('Should return a Search Result Model list', () async {
+
+  test('Should return mapped search result entities', () async {
     when(() => datasource.searchText(text)).thenAnswer((_) async => testList);
 
     final result = await repository.getListResults(text);
-    expect(result, Right(testList));
+
+    result.fold(
+      (_) => fail('Expected Right'),
+      (entities) {
+        expect(entities.length, 1);
+        expect(entities.first.title, 'Title');
+        expect(entities.first.genreIds, [99]);
+      },
+    );
   });
 
-  test('Should return a Null Datasource error if datasource returns null ',
-      () async {
+  test('Should return EmptyResultFailure if datasource returns null', () async {
     when(() => datasource.searchText(text)).thenAnswer((_) async => null);
 
     final result = await repository.getListResults(text);
-    expect(result, Left(NullDatasource()));
+    expect(result, Left(EmptyResultFailure()));
   });
 
-  test('Should return a Datasource Failure if datasource catchs error ',
-      () async {
-    when(() => datasource.searchText(text)).thenThrow(DatasourceFailure());
+  test('Should return UnexpectedFailure if datasource throws', () async {
+    when(() => datasource.searchText(text)).thenThrow(Exception());
 
     final result = await repository.getListResults(text);
-    expect(result, Left(DatasourceFailure()));
+    expect(result, Left(UnexpectedFailure()));
   });
 }

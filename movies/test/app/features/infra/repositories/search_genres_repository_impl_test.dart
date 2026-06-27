@@ -12,18 +12,30 @@ class SearchGenresDatasourceMock extends Mock
 void main() {
   final datasource = SearchGenresDatasourceMock();
   final repository = SearchGenresRepositoryImpl(datasource);
-  List<SearchGenresModel> list = [];
-  test('Should return a Search Genre Model list', () async {
-    when(() => datasource.searchGenres()).thenAnswer((_) async => list);
+
+  final testList = [
+    const SearchGenresModel(id: 28, name: 'Ação'),
+  ];
+
+  test('Should return mapped genre entities', () async {
+    when(() => datasource.searchGenres()).thenAnswer((_) async => testList);
+
     final result = await repository.getGenresList();
-    expect(result, Right(list));
+
+    result.fold(
+      (_) => fail('Expected Right'),
+      (entities) {
+        expect(entities.length, 1);
+        expect(entities.first.id, 28);
+        expect(entities.first.name, 'Ação');
+      },
+    );
   });
 
-  test('Should return a Datasource Failure if datasource catchs error ',
-      () async {
-    when(() => datasource.searchGenres()).thenThrow(DatasourceFailure());
+  test('Should return UnexpectedFailure if datasource throws', () async {
+    when(() => datasource.searchGenres()).thenThrow(Exception());
 
     final result = await repository.getGenresList();
-    expect(result, Left(DatasourceFailure()));
+    expect(result, Left(UnexpectedFailure()));
   });
 }

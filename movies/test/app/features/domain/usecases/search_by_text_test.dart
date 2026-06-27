@@ -12,8 +12,8 @@ class SearchResultsRepositoryMock extends Mock
 void main() {
   final repository = SearchResultsRepositoryMock();
   final usecase = SearchByTextImpl(repository);
-  String text = 'teste';
-  List<SearchResults> list = [];
+  const text = 'teste';
+  final list = <SearchResults>[];
 
   test('Should return a list with results', () async {
     when(() => repository.getListResults(any()))
@@ -24,18 +24,18 @@ void main() {
     verify(() => repository.getListResults(text)).called(1);
   });
 
-  test('Should return Invalid Search Text when a text is invalid', () async {
-    final result = await usecase(null);
+  test('Should return InvalidSearchText when text is empty', () async {
+    final result = await usecase('');
     expect(result, Left(InvalidSearchText()));
-    verifyNever(() => repository.getListResults(text));
+    verifyNever(() => repository.getListResults(any()));
   });
 
-  test('Should return a Server Failure when dont succeed', () async {
+  test('Should return UnexpectedFailure when repository fails', () async {
     when(() => repository.getListResults(any()))
-        .thenAnswer((_) async => Left(ServerFailure()));
+        .thenAnswer((_) async => Left(UnexpectedFailure()));
 
     final result = await usecase(text);
-    expect(result, Left(ServerFailure()));
+    expect(result, Left(UnexpectedFailure()));
     verify(() => repository.getListResults(text)).called(1);
   });
 }

@@ -14,9 +14,11 @@ class SearchByTextImpl implements SearchByText {
   SearchByTextImpl(this.repository);
 
   @override
-  Future<Either<Failure, List<SearchResults>>> call(String? text) async {
-    return text != null
-        ? await repository.getListResults(text)
-        : Left(InvalidSearchText());
+  Future<Either<Failure, List<SearchResults>>> call(String text) async {
+    if (text.isEmpty) {
+      return Left(InvalidSearchText());
+    }
+
+    return repository.getListResults(text);
   }
 }

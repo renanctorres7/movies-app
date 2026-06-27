@@ -7,17 +7,18 @@ class InvalidSearchText extends Failure {
   List<Object?> get props => [];
 }
 
-class ServerFailure extends Failure {
+class EmptyResultFailure extends Failure {
   @override
   List<Object?> get props => [];
 }
 
-class NullDatasource extends Failure {
+class UnexpectedFailure extends Failure {
   @override
   List<Object?> get props => [];
 }
 
-class DatasourceFailure extends Failure {
-  @override
-  List<Object?> get props => [];
-}
+@Deprecated('Use EmptyResultFailure')
+typedef NullDatasource = EmptyResultFailure;
+
+@Deprecated('Use UnexpectedFailure')
+typedef DatasourceFailure = UnexpectedFailure;

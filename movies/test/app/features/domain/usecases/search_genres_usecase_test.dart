@@ -13,7 +13,8 @@ void main() {
   final repository = SearchGenresRepositoryMock();
   final usecase = SearchGenresUsecaseImpl(repository);
 
-  List<SearchGenres> list = [];
+  final list = <SearchGenres>[];
+
   test('Should receive a Search Genres list', () async {
     when(() => repository.getGenresList()).thenAnswer((_) async => Right(list));
     final result = await usecase.call();
@@ -21,11 +22,11 @@ void main() {
     expect(result, Right(list));
   });
 
-  test('Should return a Server Failure when dont succeed', () async {
+  test('Should return UnexpectedFailure when repository fails', () async {
     when(() => repository.getGenresList())
-        .thenAnswer((_) async => Left(ServerFailure()));
+        .thenAnswer((_) async => Left(UnexpectedFailure()));
     final result = await usecase.call();
 
-    expect(result, Left(ServerFailure()));
+    expect(result, Left(UnexpectedFailure()));
   });
 }

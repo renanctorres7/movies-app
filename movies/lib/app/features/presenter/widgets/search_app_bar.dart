@@ -39,7 +39,7 @@ class SearchAppBar extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Filmes',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.headlineSmall,
                 ),
               ),
               Padding(

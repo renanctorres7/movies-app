@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
-
+import 'package:movies/app/core/utils/loading_status.dart';
 import 'package:movies/app/features/domain/entities/search_results.dart';
 import 'package:movies/app/features/domain/errors/errors.dart';
+import 'package:movies/app/features/domain/usecases/genre_usecases.dart';
 import 'package:movies/app/features/domain/usecases/search_by_text.dart';
 import 'package:movies/app/features/domain/usecases/search_genres_usecase.dart';
 import 'package:movies/app/features/presenter/stores/search_store.dart';
@@ -13,35 +15,52 @@ class SearchByTextMock extends Mock implements SearchByText {}
 class SearchGenresUsecaseMock extends Mock implements SearchGenresUsecase {}
 
 void main() {
-  SearchStore? store;
-  SearchByText? usecase = SearchByTextMock();
-  SearchGenresUsecase? genresUsecase = SearchGenresUsecaseMock();
-
-  List<SearchResults> testList = [];
-  String text = "vingadores";
+  late SearchStore store;
+  late SearchByText usecase;
+  late SearchGenresUsecase genresUsecase;
 
   setUp(() {
-    store = SearchStore(usecase: usecase, genresUsecase: genresUsecase);
+    Get.testMode = true;
+    usecase = SearchByTextMock();
+    genresUsecase = SearchGenresUsecaseMock();
+    store = SearchStore(
+      usecase: usecase,
+      genresUsecase: genresUsecase,
+      resolveGenreNamesUsecase: ResolveGenreNamesUsecase(),
+      filterByGenreUsecase:
+          FilterSearchResultsByGenreUsecase(ResolveGenreNamesUsecase()),
+      collectUniqueGenreNamesUsecase:
+          CollectUniqueGenreNamesUsecase(ResolveGenreNamesUsecase()),
+    );
   });
 
-  test('Should return a Search Results from the usecase', () async {
-    when(() => usecase.call(text)).thenAnswer((_) async => Right(testList));
-
-    final result = await store?.getListResults(text);
-
-    expect(result, Right(testList));
-    verify(() => usecase(text)).called(1);
+  tearDown(() {
+    store.onClose();
+    Get.reset();
   });
 
-  test(
-      'Should return a Invalid Search Text from the usecase when there is an error',
-      () async {
-    when(() => usecase.call(any()))
-        .thenAnswer((_) async => Left(InvalidSearchText()));
+  test('searchMovies sets complete status when use case succeeds', () async {
+    const text = 'vingadores';
+    final results = [SearchResults(title: 'Vingadores')];
 
-    final result = await store?.getListResults(text);
+    when(() => usecase(text)).thenAnswer((_) async => Right(results));
+    when(() => genresUsecase()).thenAnswer((_) async => const Right([]));
 
-    expect(result, Left(InvalidSearchText()));
-    verify(() => usecase(text)).called(1);
+    await store.searchMovies(text);
+
+    expect(store.loadingStatus.value, LoadingStatus.complete);
+    expect(store.listResults.length, 1);
+  });
+
+  test('searchMovies sets error status when use case fails', () async {
+    const text = 'vingadores';
+
+    when(() => usecase(text))
+        .thenAnswer((_) async => Left(UnexpectedFailure()));
+
+    await store.searchMovies(text);
+
+    expect(store.loadingStatus.value, LoadingStatus.error);
+    expect(store.failureMessage.value, isNotEmpty);
   });
 }

@@ -2,15 +2,13 @@
 
 part of 'search_results_model.dart';
 
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
 SearchResultsModel _$SearchResultsModelFromJson(Map<String, dynamic> json) =>
     SearchResultsModel(
       overview: json['overview'] as String?,
       releaseDate: json['release_date'] as String?,
-      genreIds: json['genre_ids'] as List<dynamic>?,
+      genreIds: (json['genre_ids'] as List<dynamic>?)
+          ?.map((value) => (value as num).toInt())
+          .toList(),
       originalTitle: json['original_title'] as String?,
       title: json['title'] as String?,
       backdropPath: json['backdrop_path'] as String?,

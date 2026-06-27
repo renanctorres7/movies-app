@@ -26,7 +26,7 @@ class SearchBox extends StatelessWidget {
           child: TextField(
             controller: controller,
             onSubmitted: onSubmitted,
-            style: themeData.textTheme.bodyText1,
+            style: themeData.textTheme.bodyLarge,
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.zero,
                 border: InputBorder.none,
