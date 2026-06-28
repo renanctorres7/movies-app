@@ -1,17 +1,15 @@
 # Movies App
 
-App Flutter de busca de filmes usando a [API do TMDB](https://developers.themoviedb.org/3), construído com **Clean Architecture**, **GetIt**, **GetX** e testes unitários por camada.
+App Flutter de busca de filmes usando a [API do TMDB](https://developers.themoviedb.org/3), construído com **Clean Architecture** (mesmo padrão do projeto [agenda-consultorio](https://github.com/renanctorres7/agenda-consultorio)), **GetIt**, **GetX** e testes unitários por camada.
 
 ## Estrutura do repositório
 
 ```
-movies-app/          ← repositório Git (origin: renanctorres7/movies-app)
+movies-app/          ← repositório Git
 ├── movies/          ← app Flutter
 ├── .vscode/
 └── README.md
 ```
-
-> A pasta `agenda-consultorio/` acima é apenas um diretório local de organização — o Git está em `movies-app/`.
 
 ## Configuração
 
@@ -47,15 +45,53 @@ flutter build ios --no-codesign --dart-define-from-file=dart_defines.json
 
 ## Arquitetura
 
-- `domain/` — entities, failures, use cases, contratos
-- `infra/` — models, repositories, contratos de datasource
-- `external/` — TMDB HTTP, config, image builder
-- `presenter/` — pages, widgets, store (GetX)
-- `core/` — DI (GetIt), rotas, tema
+Organização **feature-first**, alinhada ao `agenda-consultorio`:
+
+```
+lib/app/
+├── core/                    # erros, endpoints, environments, rotas, tema, DI
+└── features/
+    ├── search/
+    │   ├── domain/          # entities, repository (contratos), usecases
+    │   ├── infra/           # datasources (contratos), models, repository (impl)
+    │   ├── data/            # datasource TMDB (http)
+    │   └── presenter/       # pages, stores, widgets (GetX)
+    └── genres/
+        ├── domain/
+        ├── infra/
+        └── data/
+```
+
+### Convenções de nomenclatura
+
+| Artefato | Padrão | Exemplo |
+|----------|--------|---------|
+| Entity | `<nome>_entity.dart` | `search_results_entity.dart` |
+| Repository (contrato) | `<verbo>_<substantivo>_repository.dart` | `search_by_text_repository.dart` |
+| Repository (impl) | `<verbo>_<substantivo>_repository_impl.dart` | `search_by_text_repository_impl.dart` |
+| Use case | `<verbo>_<substantivo>_usecase.dart` + `*UsecaseImpl` | `get_popular_movies_usecase.dart` |
+| Datasource (contrato) | `infra/datasources/` | `search_by_text_datasource.dart` |
+| Datasource (impl) | `data/datasource/tmdb_*` | `tmdb_search_by_text_datasource.dart` |
+| Model | `extends Entity` + `fromEntity()` | `search_results_model.dart` |
+
+### Fluxo de dados
+
+```
+Presenter (GetX) → UseCase → Repository (domain)
+                                ↓
+                         RepositoryImpl (infra)
+                                ↓
+                         Datasource (infra contrato)
+                                ↓
+                         Tmdb*Datasource (data)
+```
+
+Erros funcionais via `Either<FailureError, T>` com `NullError`, `DataSourceError` e `DomainError`.
 
 ## Decisões técnicas
 
-- `Either<Failure, T>` para erros funcionais
-- Models com `toEntity()` — separação JSON/domain
-- `ImageUrlBuilder` — presenter desacoplado de endpoints TMDB
-- `MovieDetailsArgs` — navegação via argumentos de rota
+- `Either<FailureError, T>` para erros funcionais (padrão agenda-consultorio)
+- Models estendem entities — sem `toEntity()` nos repositórios
+- Um repository e um use case por operação
+- `ImageUrlBuilder` injetado via `SearchStore` — presenter não acessa infra diretamente
+- Camada `presenter/` com GetX — diferencial em relação ao agenda-consultorio (que não possui UI)
