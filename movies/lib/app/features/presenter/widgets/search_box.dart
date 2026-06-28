@@ -4,9 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
 class SearchBox extends StatelessWidget {
-  const SearchBox(
-      {Key? key, required this.controller, required this.onSubmitted})
-      : super(key: key);
+  const SearchBox({
+    super.key,
+    required this.controller,
+    required this.onSubmitted,
+  });
 
   final TextEditingController controller;
   final Function(String) onSubmitted;

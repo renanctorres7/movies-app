@@ -31,6 +31,20 @@ flutter analyze --no-fatal-infos
 flutter test
 ```
 
+## Pré-requisitos nativos
+
+- Flutter stable recente (Dart 3.3+)
+- **Android:** JDK 17, Android SDK compatível com Gradle 8 / AGP 8
+- **iOS:** Xcode com deployment target **13.0+**; o app usa **UIScene lifecycle** (`FlutterImplicitEngineDelegate`)
+
+## Build nativo (verificação)
+
+```bash
+cd movies
+flutter build apk --dart-define-from-file=dart_defines.json
+flutter build ios --no-codesign --dart-define-from-file=dart_defines.json
+```
+
 ## Arquitetura
 
 - `domain/` — entities, failures, use cases, contratos

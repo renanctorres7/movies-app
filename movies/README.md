@@ -1,11 +1,17 @@
-# Movies app
+# movies
 
-App simples para busca de filmes e filtrar por gêneros, usando a API do The Movie Database (https://developers.themoviedb.org/3/search/search-movies).
-
-A simple app to search movies and filter genres, using The Movie Database API (https://developers.themoviedb.org/3/search/search-movies)
+A new Flutter project.
 
 ## Getting Started
 
-A proposta do app é estudar teste unitário, Clean Architecture e Clean Code. Usei GetX e GetIt para injeção de dependências e gerenciador de estados.
+This project is a starting point for a Flutter application.
 
-The app propose is to study unit test, Clean Architecture and Clean Code.I used GetX and GetIt to dependency injection and state manager.
+A few resources to get you started if this is your first Flutter project:
+
+- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
+- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

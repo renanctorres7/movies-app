@@ -6,10 +6,10 @@ import 'package:movies/app/features/presenter/widgets/search_box.dart';
 
 class SearchAppBar extends StatelessWidget {
   const SearchAppBar({
-    Key? key,
+    super.key,
     required this.controller,
     required this.onSubmitted,
-  }) : super(key: key);
+  });
 
   final TextEditingController controller;
   final Function(String) onSubmitted;
@@ -23,7 +23,7 @@ class SearchAppBar extends StatelessWidget {
         return LinearGradient(
           begin: Alignment.center,
           end: Alignment.bottomCenter,
-          colors: [Colors.white, Colors.white, Colors.white.withOpacity(0.1)],
+          colors: [Colors.white, Colors.white, Colors.white.withValues(alpha: 0.1)],
         ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
       },
       blendMode: BlendMode.dstIn,

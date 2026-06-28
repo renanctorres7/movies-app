@@ -7,8 +7,8 @@ import 'package:movies/app/features/presenter/stores/search_store.dart';
 
 class GenresTabBar extends GetView<SearchStore> {
   const GenresTabBar({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
