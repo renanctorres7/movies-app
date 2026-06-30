@@ -9,22 +9,26 @@ class SearchBox extends StatelessWidget {
     required this.controller,
     required this.onSubmitted,
     this.compact = false,
+    this.hintText = 'Pesquise filmes',
+    this.height,
   });
 
   final TextEditingController controller;
   final Function(String) onSubmitted;
   final bool compact;
+  final String hintText;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    final height = compact ? 36.h : 47.h;
+    final boxHeight = height ?? (compact ? 36.h : 47.h);
     final iconSize = compact ? 18.sp : 24.sp;
     final hintSize = compact ? 12.sp : 14.sp;
 
     return Container(
       width: double.infinity,
-      height: height,
+      height: boxHeight,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100.r),
         color: AppColors.colorGray08,
@@ -50,7 +54,7 @@ class SearchBox extends StatelessWidget {
                 color: AppColors.colorGray02,
                 size: iconSize,
               ),
-              hintText: 'Pesquise filmes',
+              hintText: hintText,
               hintStyle: GoogleFonts.montserrat(
                 fontSize: hintSize,
                 color: AppColors.colorGray02,

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/routes/app_routes.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 import 'package:movies/app/core/utils/loading_status.dart';
+import 'package:movies/app/core/widgets/widgets.dart';
+import 'package:movies/app/features/search/presenter/components/components.dart';
 import 'package:movies/app/features/search/presenter/stores/search_store.dart';
-import 'package:movies/app/features/search/presenter/widgets/big_poster_widget.dart';
-import 'package:movies/app/features/search/presenter/widgets/search_header_delegate.dart';
 
 class SearchPage extends GetView<SearchStore> {
   const SearchPage({super.key});
@@ -35,60 +33,41 @@ class SearchPage extends GetView<SearchStore> {
                       controller.searchMovies(text);
                     }
                   },
+                  genresSection: Obx(
+                    () => SelectableChipTabBar(
+                      items: controller.listGenresByName,
+                      selectedIndex: controller.genreSelectedIndex.value,
+                      isActive: controller.genreFilterActive.value,
+                      onTap: controller.setGenreFilter,
+                    ),
+                  ),
                 ),
               ),
               switch (status) {
                 LoadingStatus.none => const SliverToBoxAdapter(
                     child: SizedBox.shrink(),
                   ),
-                LoadingStatus.loading => SliverFillRemaining(
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.colorHighlight,
-                        strokeWidth: 6.w,
-                      ),
-                    ),
+                LoadingStatus.loading => const LoadingSliver(),
+                LoadingStatus.empty => const MessageSliver(
+                    message: 'Nenhum resultado encontrado',
                   ),
-                LoadingStatus.empty => SliverFillRemaining(
-                    child: Center(
-                      child: Text(
-                        'Nenhum resultado encontrado',
-                        style: GoogleFonts.montserrat(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.colorGray01,
-                        ),
-                      ),
-                    ),
+                LoadingStatus.error => ErrorRetrySliver(
+                    message: controller.failureMessage.value,
+                    onRetry: _retry,
                   ),
-                LoadingStatus.error => SliverFillRemaining(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            child: Text(
-                              controller.failureMessage.value,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.colorGray01,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16.h),
-                          ElevatedButton(
-                            onPressed: _retry,
-                            child: const Text('Tentar novamente'),
-                          ),
-                        ],
-                      ),
-                    ),
+                LoadingStatus.complete => SearchResultsSliver(
+                    results: controller.displayedResults,
+                    bottomPadding: bottomPadding,
+                    onMovieTap: (movie) {
+                      Get.toNamed(
+                        AppRoutes.details,
+                        arguments: controller.buildDetailsArgs(movie),
+                      );
+                    },
+                    genreNamesFor: controller.genreNamesFor,
+                    imageUrlFor: (movie) => controller.imageUrlBuilder
+                        .buildPosterUrl(movie.backdropPath ?? ''),
                   ),
-                LoadingStatus.complete =>
-                  _buildResultsSliver(bottomPadding),
               },
             ],
           );
@@ -105,39 +84,5 @@ class SearchPage extends GetView<SearchStore> {
     }
 
     controller.loadPopularMovies();
-  }
-
-  Widget _buildResultsSliver(double bottomPadding) {
-    final results = controller.displayedResults;
-
-    return SliverPadding(
-      padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 8.h + bottomPadding),
-      sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final movie = results[index];
-            final genreNames = controller.genreNamesFor(movie);
-
-            return GestureDetector(
-              onTap: () {
-                Get.toNamed(
-                  AppRoutes.details,
-                  arguments: controller.buildDetailsArgs(movie),
-                );
-              },
-              child: BigPosterWidget(
-                imageUrl: controller.imageUrlBuilder.buildPosterUrl(
-                  movie.backdropPath ?? '',
-                ),
-                title: movie.title ?? '',
-                genre1: genreNames.isNotEmpty ? genreNames.first : '',
-                genre2: genreNames.length >= 2 ? genreNames[1] : '',
-              ),
-            );
-          },
-          childCount: results.length,
-        ),
-      ),
-    );
   }
 }

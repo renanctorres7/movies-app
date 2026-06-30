@@ -2,26 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
-import 'package:movies/app/features/search/presenter/widgets/genres_tab_bar.dart';
-import 'package:movies/app/features/search/presenter/widgets/search_box.dart';
+import 'package:movies/app/core/widgets/search_box.dart';
 
 class SearchHeaderDelegate extends SliverPersistentHeaderDelegate {
   SearchHeaderDelegate({
     required this.controller,
     required this.onSubmitted,
     required this.topPadding,
+    required this.genresSection,
   });
 
   final TextEditingController controller;
   final ValueChanged<String> onSubmitted;
   final double topPadding;
+  final Widget genresSection;
 
   static const double _searchHeight = 36;
-  static const double _verticalPadding = 16;
+  static const double _bodyBottomPadding = 8;
+  static const double _bodyTopPadding = 8;
   static const double _expandedBodyHeight = 190;
+  static const double _genresBarHeight = 30;
 
   double get _collapsedBodyHeight =>
-      _searchHeight.h + _verticalPadding.h;
+      _searchHeight.h + _bodyTopPadding.h + _bodyBottomPadding.h;
 
   @override
   double get maxExtent => _expandedBodyHeight.h + topPadding;
@@ -64,13 +67,22 @@ class SearchHeaderDelegate extends SliverPersistentHeaderDelegate {
           color: AppColors.colorWhite,
           child: Padding(
             padding: EdgeInsets.only(
-              top: topPadding + 8.h,
+              top: topPadding + _bodyTopPadding.h,
               left: 20.w,
               right: 20.w,
-              bottom: 8.h,
+              bottom: _bodyBottomPadding.h,
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
+                final genresBlockHeight = showGenres && genresTopPadding > 0
+                    ? genresTopPadding + _genresBarHeight.h
+                    : 0.0;
+                final reservedHeight =
+                    titleHeight + spacingHeight + genresBlockHeight;
+                final maxSearchHeight = isCompact ? _searchHeight.h : 47.h;
+                final searchHeight = (constraints.maxHeight - reservedHeight)
+                    .clamp(0.0, maxSearchHeight);
+
                 return ClipRect(
                   child: Align(
                     alignment: Alignment.bottomCenter,
@@ -96,13 +108,14 @@ class SearchHeaderDelegate extends SliverPersistentHeaderDelegate {
                           controller: controller,
                           onSubmitted: onSubmitted,
                           compact: isCompact,
+                          height: searchHeight,
                         ),
                         if (showGenres && genresTopPadding > 0)
                           Padding(
                             padding: EdgeInsets.only(top: genresTopPadding),
                             child: SizedBox(
-                              height: 30.h,
-                              child: const GenresTabBar(),
+                              height: _genresBarHeight.h,
+                              child: genresSection,
                             ),
                           ),
                       ],
@@ -121,6 +134,7 @@ class SearchHeaderDelegate extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant SearchHeaderDelegate oldDelegate) {
     return oldDelegate.controller != controller ||
         oldDelegate.onSubmitted != onSubmitted ||
-        oldDelegate.topPadding != topPadding;
+        oldDelegate.topPadding != topPadding ||
+        oldDelegate.genresSection != genresSection;
   }
 }

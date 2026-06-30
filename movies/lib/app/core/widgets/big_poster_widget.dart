@@ -8,14 +8,12 @@ class BigPosterWidget extends StatelessWidget {
     super.key,
     required this.imageUrl,
     required this.title,
-    required this.genre1,
-    required this.genre2,
+    required this.subtitle,
   });
 
   final String imageUrl;
   final String title;
-  final String genre1;
-  final String genre2;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +112,7 @@ class BigPosterWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '$genre1 - $genre2',
+                      subtitle,
                       style: GoogleFonts.montserrat(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w400,

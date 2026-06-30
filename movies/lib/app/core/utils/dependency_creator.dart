@@ -1,18 +1,15 @@
 import 'package:get_it/get_it.dart';
-import 'package:movies/app/features/domain/repositories/search_genres_repository.dart';
-import 'package:movies/app/features/domain/repositories/search_results_repository.dart';
-import 'package:movies/app/features/domain/usecases/genre_usecases.dart';
-import 'package:movies/app/features/domain/usecases/search_by_text.dart';
-import 'package:movies/app/features/domain/usecases/search_genres_usecase.dart';
-import 'package:movies/app/features/external/movie_database/config/tmdb_config.dart';
-import 'package:movies/app/features/external/movie_database/genres/movie_database_genres_datasource.dart';
-import 'package:movies/app/features/external/movie_database/image/tmdb_image_url_builder.dart';
-import 'package:movies/app/features/external/movie_database/search/movie_database_search_datasource.dart';
-import 'package:movies/app/features/infra/contracts/image_url_builder.dart';
-import 'package:movies/app/features/infra/datasources/search_genres_datasource.dart';
-import 'package:movies/app/features/infra/datasources/search_results_datasource.dart';
-import 'package:movies/app/features/infra/repositories/search_genres_repository_impl.dart';
-import 'package:movies/app/features/infra/repositories/search_results_repository_impl.dart';
+import 'package:movies/app/features/genres/data/datasource/datasource.dart';
+import 'package:movies/app/features/genres/domain/repository/repository.dart';
+import 'package:movies/app/features/genres/domain/usecases/usecases.dart';
+import 'package:movies/app/features/genres/infra/datasources/datasources.dart';
+import 'package:movies/app/features/genres/infra/repository/repository.dart';
+import 'package:movies/app/features/search/data/datasource/datasource.dart';
+import 'package:movies/app/features/search/domain/repository/repository.dart';
+import 'package:movies/app/features/search/domain/usecases/usecases.dart';
+import 'package:movies/app/features/search/infra/contracts/image_url_builder.dart';
+import 'package:movies/app/features/search/infra/datasources/datasources.dart';
+import 'package:movies/app/features/search/infra/repository/repository.dart';
 import 'package:http/http.dart' as http;
 
 final getIt = GetIt.instance;
@@ -21,20 +18,36 @@ class DependencyCreator {
   static void init() {
     getIt.registerSingleton<http.Client>(http.Client());
     getIt.registerSingleton<ImageUrlBuilder>(TmdbImageUrlBuilder());
-    getIt.registerSingleton<SearchResultsDatasource>(
-      MovieDatabaseSearchDatasource(getIt(), apiKey: TmdbConfig.apiKey),
+
+    getIt.registerSingleton<SearchByTextDatasource>(
+      TmdbSearchByTextDatasource(getIt()),
     );
-    getIt.registerSingleton<SearchGenresDatasource>(
-      MovieDatabaseGenresDatasource(getIt(), apiKey: TmdbConfig.apiKey),
+    getIt.registerSingleton<GetPopularMoviesDatasource>(
+      TmdbGetPopularMoviesDatasource(getIt()),
     );
-    getIt.registerSingleton<SearchResultsRepository>(
-      SearchResultsRepositoryImpl(getIt()),
+    getIt.registerSingleton<GetGenresListDatasource>(
+      TmdbGetGenresDatasource(getIt()),
     );
-    getIt.registerSingleton<SearchGenresRepository>(
-      SearchGenresRepositoryImpl(getIt()),
+
+    getIt.registerSingleton<SearchByTextRepository>(
+      SearchByTextRepositoryImpl(getIt()),
     );
-    getIt.registerSingleton<SearchGenresUsecase>(SearchGenresUsecaseImpl(getIt()));
-    getIt.registerSingleton<SearchByText>(SearchByTextImpl(getIt()));
+    getIt.registerSingleton<GetPopularMoviesRepository>(
+      GetPopularMoviesRepositoryImpl(getIt()),
+    );
+    getIt.registerSingleton<GetGenresListRepository>(
+      GetGenresListRepositoryImpl(getIt()),
+    );
+
+    getIt.registerSingleton<GetGenresListUsecase>(
+      GetGenresListUsecaseImpl(getIt()),
+    );
+    getIt.registerSingleton<SearchByTextUsecase>(
+      SearchByTextUsecaseImpl(getIt()),
+    );
+    getIt.registerSingleton<GetPopularMoviesUsecase>(
+      GetPopularMoviesUsecaseImpl(getIt()),
+    );
     getIt.registerSingleton(ResolveGenreNamesUsecase());
     getIt.registerSingleton(
       FilterSearchResultsByGenreUsecase(getIt<ResolveGenreNamesUsecase>()),

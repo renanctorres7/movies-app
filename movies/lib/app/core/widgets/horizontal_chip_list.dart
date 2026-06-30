@@ -3,20 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
-class GenresDetailsPageWidget extends StatelessWidget {
-  const GenresDetailsPageWidget({super.key, required this.genreNames});
+class HorizontalChipList extends StatelessWidget {
+  const HorizontalChipList({super.key, required this.items});
 
-  final List<String> genreNames;
+  final List<String> items;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300.w,
       height: 30.h,
-      child: genreNames.isNotEmpty
+      child: items.isNotEmpty
           ? ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: genreNames.length,
+              itemCount: items.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.only(right: 12.w),
@@ -30,7 +30,7 @@ class GenresDetailsPageWidget extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                       child: Text(
-                        genreNames[index],
+                        items[index],
                         style: GoogleFonts.montserrat(
                           fontSize: 14.sp,
                           color: AppColors.colorGray02,
