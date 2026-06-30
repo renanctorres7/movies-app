@@ -1,6 +1,6 @@
 # Movies App
 
-App Flutter de busca de filmes usando a [API do TMDB](https://developers.themoviedb.org/3), construído com **Clean Architecture** (mesmo padrão do projeto [agenda-consultorio](https://github.com/renanctorres7/agenda-consultorio)), **GetIt**, **GetX** e testes unitários por camada.
+App Flutter de busca de filmes usando a [API do TMDB](https://developers.themoviedb.org/3), construído com **Clean Architecture**, **GetIt**, **GetX** e testes unitários por camada.
 
 ## Estrutura do repositório
 
@@ -45,21 +45,51 @@ flutter build ios --no-codesign --dart-define-from-file=dart_defines.json
 
 ## Arquitetura
 
-Organização **feature-first**, alinhada ao `agenda-consultorio`:
+Organização **feature-first**:
 
 ```
 lib/app/
-├── core/                    # erros, endpoints, environments, rotas, tema, DI
+├── core/
+│   ├── errors/              # FailureError, NullError, DataSourceError, DomainError
+│   ├── endpoints/           # URLs TMDB
+│   ├── environments/        # apiKey via dart-define
+│   ├── routes/              # rotas GetX
+│   ├── theme/
+│   ├── utils/               # DI (GetIt), LoadingStatus
+│   └── widgets/             # widgets universais reutilizáveis
 └── features/
     ├── search/
     │   ├── domain/          # entities, repository (contratos), usecases
     │   ├── infra/           # datasources (contratos), models, repository (impl)
     │   ├── data/            # datasource TMDB (http)
-    │   └── presenter/       # pages, stores, widgets (GetX)
+    │   └── presenter/
+    │       ├── bindings/
+    │       ├── components/  # UI específica da feature (search/, details/)
+    │       ├── models/
+    │       ├── pages/
+    │       └── stores/      # GetX
     └── genres/
         ├── domain/
         ├── infra/
         └── data/
+```
+
+### Camada de UI
+
+| Pasta | Responsabilidade | Exemplos |
+|-------|------------------|----------|
+| `core/widgets/` | Componentes genéricos, sem store/GetX | `SearchBox`, `BigPosterWidget`, `SelectableChipTabBar`, `LoadingSliver` |
+| `presenter/components/` | Composição específica da feature | `SearchHeaderDelegate`, `SearchResultsSliver`, `DetailsContent` |
+| `presenter/pages/` | Orquestração fina das telas | `SearchPage`, `DetailsPage` |
+
+### Estrutura de testes
+
+```
+test/
+├── mocks/                   # fixtures JSON reutilizáveis
+└── app/features/
+    ├── search/              # espelha domain, infra, data, presenter
+    └── genres/
 ```
 
 ### Convenções de nomenclatura
@@ -90,8 +120,9 @@ Erros funcionais via `Either<FailureError, T>` com `NullError`, `DataSourceError
 
 ## Decisões técnicas
 
-- `Either<FailureError, T>` para erros funcionais (padrão agenda-consultorio)
+- `Either<FailureError, T>` para erros funcionais
 - Models estendem entities — sem `toEntity()` nos repositórios
 - Um repository e um use case por operação
-- `ImageUrlBuilder` injetado via `SearchStore` — presenter não acessa infra diretamente
-- Camada `presenter/` com GetX — diferencial em relação ao agenda-consultorio (que não possui UI)
+- `ImageUrlBuilder` injetado via `SearchStore` — pages não acessam infra diretamente
+- Widgets universais em `core/widgets/`; UI da feature em `presenter/components/`
+- Camada `presenter/` com GetX para estado e navegação
