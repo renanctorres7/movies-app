@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 import 'package:movies/app/core/widgets/horizontal_chip_list.dart';
@@ -35,20 +34,20 @@ class DetailsContent extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.shade200,
-                spreadRadius: 2.r,
-                blurRadius: 10.r,
+                spreadRadius: 2,
+                blurRadius: 10,
                 offset: const Offset(2, 5),
               ),
             ],
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: BorderRadius.circular(10),
             child: imageUrl.isNotEmpty
                 ? Image.network(
                     imageUrl,
-                    height: 318.h,
-                    width: 216.w,
+                    height: 318,
+                    width: 216,
                     fit: BoxFit.cover,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
@@ -61,7 +60,7 @@ class DetailsContent extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: SizedBox(
-                            width: 200.w,
+                            width: 200,
                             child: LinearProgressIndicator(
                               color: AppColors.colorGray03,
                               value: loadingProgress.expectedTotalBytes != null
@@ -78,7 +77,7 @@ class DetailsContent extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 32.h),
+          padding: const EdgeInsets.only(top: 32),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -87,7 +86,7 @@ class DetailsContent extends StatelessWidget {
               Text(
                 '${popularity.toStringAsFixed(1)} ',
                 style: GoogleFonts.montserrat(
-                  fontSize: 24.sp,
+                  fontSize: 24,
                   color: AppColors.colorHighlight,
                   fontWeight: FontWeight.w600,
                 ),
@@ -95,7 +94,7 @@ class DetailsContent extends StatelessWidget {
               Text(
                 ' /10',
                 style: GoogleFonts.montserrat(
-                  fontSize: 14.sp,
+                  fontSize: 14,
                   color: AppColors.colorGray03,
                   fontWeight: FontWeight.w600,
                 ),
@@ -104,36 +103,36 @@ class DetailsContent extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 32.h),
+          padding: const EdgeInsets.only(top: 32),
           child: Text(
             title.toUpperCase(),
             style: GoogleFonts.montserrat(
-              fontSize: 14.sp,
+              fontSize: 14,
               color: AppColors.colorGray01,
               fontWeight: FontWeight.w600,
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 12.h),
+          padding: const EdgeInsets.only(top: 12),
           child: Text(
             'Título original: $originalTitle',
             style: GoogleFonts.montserrat(
-              fontSize: 10.sp,
+              fontSize: 10,
               color: AppColors.colorGray02,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 40.h),
+          padding: const EdgeInsets.only(top: 40),
           child: Container(
             alignment: Alignment.center,
-            width: 100.w,
-            height: 35.h,
+            width: 100,
+            height: 35,
             decoration: BoxDecoration(
               color: AppColors.colorGray08,
-              borderRadius: BorderRadius.circular(5.r),
+              borderRadius: BorderRadius.circular(5),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -141,7 +140,7 @@ class DetailsContent extends StatelessWidget {
                 Text(
                   'Ano: ',
                   style: GoogleFonts.montserrat(
-                    fontSize: 12.sp,
+                    fontSize: 12,
                     color: AppColors.colorGray03,
                     fontWeight: FontWeight.w600,
                   ),
@@ -149,7 +148,7 @@ class DetailsContent extends StatelessWidget {
                 Text(
                   year,
                   style: GoogleFonts.montserrat(
-                    fontSize: 14.sp,
+                    fontSize: 14,
                     color: AppColors.colorGray01,
                     fontWeight: FontWeight.w600,
                   ),
@@ -159,18 +158,18 @@ class DetailsContent extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 12.h),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 12),
           child: HorizontalChipList(items: genreNames),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 56.h, left: 20.w),
+          padding: const EdgeInsets.only(top: 56, left: 20),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
               'Descrição',
               textAlign: TextAlign.left,
               style: GoogleFonts.montserrat(
-                fontSize: 14.sp,
+                fontSize: 14,
                 color: AppColors.colorGray02,
                 fontWeight: FontWeight.w400,
               ),
@@ -178,13 +177,17 @@ class DetailsContent extends StatelessWidget {
           ),
         ),
         Padding(
-          padding:
-              EdgeInsets.only(top: 8.h, left: 20.w, right: 20.w, bottom: 32.h),
+          padding: const EdgeInsets.only(
+            top: 8,
+            left: 20,
+            right: 20,
+            bottom: 32,
+          ),
           child: Text(
             overview,
             textAlign: TextAlign.left,
             style: GoogleFonts.montserrat(
-              fontSize: 12.sp,
+              fontSize: 12,
               color: AppColors.colorGray01,
               fontWeight: FontWeight.w600,
             ),

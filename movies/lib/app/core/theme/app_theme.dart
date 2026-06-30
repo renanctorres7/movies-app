@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
@@ -13,22 +12,22 @@ class AppTheme {
         textTheme: TextTheme(
           bodyLarge: GoogleFonts.montserrat(
             color: AppColors.colorGray01,
-            fontSize: 12.sp,
+            fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
           bodyMedium: GoogleFonts.montserrat(
             color: AppColors.colorGray01,
-            fontSize: 14.sp,
+            fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
           displayLarge: GoogleFonts.montserrat(
             color: AppColors.colorHighlight,
-            fontSize: 34.sp,
+            fontSize: 34,
             fontWeight: FontWeight.w600,
           ),
           headlineSmall: GoogleFonts.montserrat(
             color: AppColors.colorGray01,
-            fontSize: 18.sp,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
         ),

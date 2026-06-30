@@ -13,7 +13,6 @@ dependencies:
   dartz: ^0.10.1
   equatable: ^2.0.5
   http: ^1.2.2
-  flutter_screenutil: ^5.9.3
   google_fonts: ^6.2.1
   get: ^4.6.6
   get_it: ^8.0.2

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movies/app/core/routes/app_pages.dart';
 import 'package:movies/app/core/routes/app_routes.dart';
@@ -10,20 +9,13 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Movies',
-          theme: AppTheme.appTheme,
-          initialRoute: AppRoutes.search,
-          getPages: AppPages.pages,
-          defaultTransition: Transition.fade,
-        );
-      },
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Movies',
+      theme: AppTheme.appTheme,
+      initialRoute: AppRoutes.search,
+      getPages: AppPages.pages,
+      defaultTransition: Transition.fade,
     );
   }
 }

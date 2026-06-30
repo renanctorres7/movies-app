@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
@@ -15,7 +14,7 @@ class MessageSliver extends StatelessWidget {
         child: Text(
           message,
           style: GoogleFonts.montserrat(
-            fontSize: 14.sp,
+            fontSize: 14,
             fontWeight: FontWeight.w400,
             color: AppColors.colorGray01,
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
@@ -20,14 +19,14 @@ class BigPosterWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: 16.h),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Center(
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             if (imageUrl.isNotEmpty)
               ClipRRect(
-                borderRadius: BorderRadius.circular(10.r),
+                borderRadius: BorderRadius.circular(10),
                 child: ShaderMask(
                   shaderCallback: (rect) {
                     return const LinearGradient(
@@ -41,9 +40,10 @@ class BigPosterWidget extends StatelessWidget {
                   blendMode: BlendMode.darken,
                   child: Image.network(
                     imageUrl,
-                    height: 430.h,
-                    width: 300.w,
+                    height: 430,
+                    width: 300,
                     fit: BoxFit.cover,
+                    alignment: Alignment.topLeft,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
                         return child;
@@ -55,7 +55,7 @@ class BigPosterWidget extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: SizedBox(
-                            width: 200.w,
+                            width: 200,
                             child: LinearProgressIndicator(
                               color: AppColors.colorGray03,
                               value: loadingProgress.expectedTotalBytes != null
@@ -72,19 +72,19 @@ class BigPosterWidget extends StatelessWidget {
               )
             else
               Container(
-                width: 300.w,
-                height: 250.h,
+                width: 300,
+                height: 250,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
+                  borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: AppColors.colorGray03),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.only(left: 12.w, top: 12.h),
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 12, top: 12),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Icon(
                       Icons.movie,
-                      size: 24.sp,
+                      size: 24,
                       color: AppColors.colorGray03,
                     ),
                   ),
@@ -94,16 +94,17 @@ class BigPosterWidget extends StatelessWidget {
               alignment: Alignment.bottomLeft,
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.only(left: 24.w, bottom: 32.h, right: 24.w),
+                padding:
+                    const EdgeInsets.only(left: 24, bottom: 32, right: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(bottom: 12.h),
+                      padding: const EdgeInsets.only(bottom: 12),
                       child: Text(
                         title,
                         style: GoogleFonts.montserrat(
-                          fontSize: 14.sp,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: imageUrl.isNotEmpty
                               ? AppColors.colorWhite
@@ -114,7 +115,7 @@ class BigPosterWidget extends StatelessWidget {
                     Text(
                       subtitle,
                       style: GoogleFonts.montserrat(
-                        fontSize: 10.sp,
+                        fontSize: 10,
                         fontWeight: FontWeight.w400,
                         color: imageUrl.isNotEmpty
                             ? AppColors.colorWhite

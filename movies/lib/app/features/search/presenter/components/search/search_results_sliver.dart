@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/app/core/widgets/big_poster_widget.dart';
 import 'package:movies/app/features/search/domain/entities/entities.dart';
 
@@ -22,7 +21,7 @@ class SearchResultsSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 8.h + bottomPadding),
+      padding: EdgeInsets.fromLTRB(20, 8, 20, 8 + bottomPadding),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {

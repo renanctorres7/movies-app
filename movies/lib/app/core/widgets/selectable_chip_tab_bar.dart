@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
@@ -27,14 +26,15 @@ class SelectableChipTabBar extends StatelessWidget {
 
     return SizedBox(
       width: size.width,
-      height: 30.h,
+      height: 30,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: items.length,
         itemBuilder: (context, index) {
           final isSelected = isActive && selectedIndex == index;
-          final backgroundColor =
-              isActive ? (isSelected ? AppColors.colorHighlight : AppColors.colorWhite) : AppColors.colorWhite;
+          final backgroundColor = isActive
+              ? (isSelected ? AppColors.colorHighlight : AppColors.colorWhite)
+              : AppColors.colorWhite;
           final textColor = isActive
               ? (isSelected ? AppColors.colorWhite : AppColors.colorHighlight)
               : AppColors.colorHighlight;
@@ -42,19 +42,20 @@ class SelectableChipTabBar extends StatelessWidget {
           return GestureDetector(
             onTap: () => onTap(index, items[index]),
             child: Padding(
-              padding: EdgeInsets.only(right: 12.w),
+              padding: const EdgeInsets.only(right: 12),
               child: Container(
                 decoration: BoxDecoration(
                   color: backgroundColor,
                   border: Border.all(color: AppColors.colorGray08, width: 1),
-                  borderRadius: BorderRadius.circular(26.r),
+                  borderRadius: BorderRadius.circular(26),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Text(
                     items[index],
                     style: GoogleFonts.montserrat(
-                      fontSize: 12.sp,
+                      fontSize: 12,
                       color: textColor,
                       fontWeight: FontWeight.w400,
                     ),

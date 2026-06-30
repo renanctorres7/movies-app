@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
@@ -23,18 +22,18 @@ class ErrorRetrySliver extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 message,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.montserrat(
-                  fontSize: 14.sp,
+                  fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: AppColors.colorGray01,
                 ),
               ),
             ),
-            SizedBox(height: 16.h),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: onRetry,
               child: Text(retryLabel),

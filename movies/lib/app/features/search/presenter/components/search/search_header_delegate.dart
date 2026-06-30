@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 import 'package:movies/app/core/widgets/search_box.dart';
 
@@ -24,10 +23,10 @@ class SearchHeaderDelegate extends SliverPersistentHeaderDelegate {
   static const double _genresBarHeight = 30;
 
   double get _collapsedBodyHeight =>
-      _searchHeight.h + _bodyTopPadding.h + _bodyBottomPadding.h;
+      _searchHeight + _bodyTopPadding + _bodyBottomPadding;
 
   @override
-  double get maxExtent => _expandedBodyHeight.h + topPadding;
+  double get maxExtent => _expandedBodyHeight + topPadding;
 
   @override
   double get minExtent => _collapsedBodyHeight + topPadding;
@@ -49,11 +48,11 @@ class SearchHeaderDelegate extends SliverPersistentHeaderDelegate {
     final isCompact = shrinkPercent > 0.05;
 
     final titleHeight =
-        showTitle ? (32 * (1 - shrinkPercent)).clamp(0.0, 32.0).h : 0.0;
+        showTitle ? (32 * (1 - shrinkPercent)).clamp(0.0, 32.0) : 0.0;
     final spacingHeight =
-        showTitle ? (20 * (1 - shrinkPercent)).clamp(0.0, 20.0).h : 0.0;
+        showTitle ? (20 * (1 - shrinkPercent)).clamp(0.0, 20.0) : 0.0;
     final genresTopPadding =
-        showGenres ? (16 * (1 - shrinkPercent * 3)).clamp(0.0, 16.0).h : 0.0;
+        showGenres ? (16 * (1 - shrinkPercent * 3)).clamp(0.0, 16.0) : 0.0;
 
     return SizedBox(
       height: currentExtent,
@@ -67,19 +66,19 @@ class SearchHeaderDelegate extends SliverPersistentHeaderDelegate {
           color: AppColors.colorWhite,
           child: Padding(
             padding: EdgeInsets.only(
-              top: topPadding + _bodyTopPadding.h,
-              left: 20.w,
-              right: 20.w,
-              bottom: _bodyBottomPadding.h,
+              top: topPadding + _bodyTopPadding,
+              left: 20,
+              right: 20,
+              bottom: _bodyBottomPadding,
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final genresBlockHeight = showGenres && genresTopPadding > 0
-                    ? genresTopPadding + _genresBarHeight.h
+                    ? genresTopPadding + _genresBarHeight
                     : 0.0;
                 final reservedHeight =
                     titleHeight + spacingHeight + genresBlockHeight;
-                final maxSearchHeight = isCompact ? _searchHeight.h : 47.h;
+                final maxSearchHeight = isCompact ? _searchHeight : 47.0;
                 final searchHeight = (constraints.maxHeight - reservedHeight)
                     .clamp(0.0, maxSearchHeight);
 
@@ -114,7 +113,7 @@ class SearchHeaderDelegate extends SliverPersistentHeaderDelegate {
                           Padding(
                             padding: EdgeInsets.only(top: genresTopPadding),
                             child: SizedBox(
-                              height: _genresBarHeight.h,
+                              height: _genresBarHeight,
                               child: genresSection,
                             ),
                           ),

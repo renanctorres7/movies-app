@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 import 'package:movies/app/features/search/presenter/components/components.dart';
@@ -17,42 +16,44 @@ class DetailsPage extends StatelessWidget {
         : '';
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      backgroundColor: AppColors.colorGray08,
-      body: SizedBox(
-        width: size.width,
-        height: size.height,
-        child: ListView(
-          children: [
-            const DetailsBackButton(),
-            Padding(
-              padding: EdgeInsets.only(top: 50.h),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 100.h),
-                    child: Container(
-                      color: Colors.white,
-                      width: size.width,
-                      height: size.height,
+    return Container(
+      color: AppColors.colorGray08,
+      child: SafeArea(
+        child: Scaffold(
+          extendBody: true,
+          extendBodyBehindAppBar: true,
+          backgroundColor: AppColors.colorGray08,
+          body: SizedBox(
+            width: size.width,
+            height: size.height,
+            child: ListView(
+              children: [
+                const DetailsBackButton(),
+                Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 100),
+                      child: Container(
+                        color: Colors.white,
+                        width: size.width,
+                        height: size.height,
+                      ),
                     ),
-                  ),
-                  DetailsContent(
-                    imageUrl: args.imageUrl,
-                    title: movie.title ?? '',
-                    originalTitle: movie.originalTitle ?? '',
-                    popularity: movie.voteAverage?.toDouble() ?? 0,
-                    year: year,
-                    genreNames: args.genreNames,
-                    overview: movie.overview ?? '',
-                  ),
-                ],
-              ),
+                    DetailsContent(
+                      imageUrl: args.imageUrl,
+                      title: movie.title ?? '',
+                      originalTitle: movie.originalTitle ?? '',
+                      popularity: movie.voteAverage?.toDouble() ?? 0,
+                      year: year,
+                      genreNames: args.genreNames,
+                      overview: movie.overview ?? '',
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
