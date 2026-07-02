@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:movies/app/app_widget.dart';
+import 'package:movies/app/core/utils/dependency_creator.dart';
 
-import 'app/core/utils/dependency_creator.dart';
-
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await DependencyCreator.init();
+  DependencyCreator.init();
   runApp(const AppWidget());
 }

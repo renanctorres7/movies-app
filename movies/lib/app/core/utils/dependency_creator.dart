@@ -1,31 +1,59 @@
 import 'package:get_it/get_it.dart';
-import 'package:movies/app/features/domain/repositories/search_genres_repository.dart';
-import 'package:movies/app/features/domain/repositories/search_results_repository.dart';
-import 'package:movies/app/features/domain/usecases/search_genres_usecase.dart';
-import 'package:movies/app/features/external/movie_database/genres/movie_database_genres_datasource.dart';
-import 'package:movies/app/features/external/movie_database/search/movie_database_search_datasource.dart';
-import 'package:movies/app/features/infra/datasources/search_genres_datasource.dart';
-import 'package:movies/app/features/infra/datasources/search_results_datasource.dart';
-import 'package:movies/app/features/infra/repositories/search_genres_repository_impl.dart';
-import 'package:movies/app/features/infra/repositories/search_results_repository_impl.dart';
+import 'package:movies/app/features/genres/data/datasource/datasource.dart';
+import 'package:movies/app/features/genres/domain/repository/repository.dart';
+import 'package:movies/app/features/genres/domain/usecases/usecases.dart';
+import 'package:movies/app/features/genres/infra/datasources/datasources.dart';
+import 'package:movies/app/features/genres/infra/repository/repository.dart';
+import 'package:movies/app/features/search/data/datasource/datasource.dart';
+import 'package:movies/app/features/search/domain/repository/repository.dart';
+import 'package:movies/app/features/search/domain/usecases/usecases.dart';
+import 'package:movies/app/features/search/infra/contracts/image_url_builder.dart';
+import 'package:movies/app/features/search/infra/datasources/datasources.dart';
+import 'package:movies/app/features/search/infra/repository/repository.dart';
 import 'package:http/http.dart' as http;
 
-import '../../features/domain/usecases/search_by_text.dart';
-
-final s1 = GetIt.instance;
+final getIt = GetIt.instance;
 
 class DependencyCreator {
-  static init() {
-    s1.registerSingleton<http.Client>(http.Client());
-    s1.registerSingleton<SearchResultsDatasource>(
-        MovieDatabaseSearchDatasource(s1()));
-    s1.registerSingleton<SearchGenresDatasource>(
-        MovieDatabaseGenresDatasource(s1()));
-    s1.registerSingleton<SearchResultsRepository>(
-        SearchResultsRepositoryImpl(s1()));
-    s1.registerSingleton<SearchGenresRepository>(
-        SearchGenresRepositoryImpl(s1()));
-    s1.registerSingleton<SearchGenresUsecase>(SearchGenresUsecaseImpl(s1()));
-    s1.registerSingleton<SearchByText>(SearchByTextImpl(s1()));
+  static void init() {
+    getIt.registerSingleton<http.Client>(http.Client());
+    getIt.registerSingleton<ImageUrlBuilder>(TmdbImageUrlBuilder());
+
+    getIt.registerSingleton<SearchByTextDatasource>(
+      TmdbSearchByTextDatasource(getIt()),
+    );
+    getIt.registerSingleton<GetPopularMoviesDatasource>(
+      TmdbGetPopularMoviesDatasource(getIt()),
+    );
+    getIt.registerSingleton<GetGenresListDatasource>(
+      TmdbGetGenresDatasource(getIt()),
+    );
+
+    getIt.registerSingleton<SearchByTextRepository>(
+      SearchByTextRepositoryImpl(getIt()),
+    );
+    getIt.registerSingleton<GetPopularMoviesRepository>(
+      GetPopularMoviesRepositoryImpl(getIt()),
+    );
+    getIt.registerSingleton<GetGenresListRepository>(
+      GetGenresListRepositoryImpl(getIt()),
+    );
+
+    getIt.registerSingleton<GetGenresListUsecase>(
+      GetGenresListUsecaseImpl(getIt()),
+    );
+    getIt.registerSingleton<SearchByTextUsecase>(
+      SearchByTextUsecaseImpl(getIt()),
+    );
+    getIt.registerSingleton<GetPopularMoviesUsecase>(
+      GetPopularMoviesUsecaseImpl(getIt()),
+    );
+    getIt.registerSingleton(ResolveGenreNamesUsecase());
+    getIt.registerSingleton(
+      FilterSearchResultsByGenreUsecase(getIt<ResolveGenreNamesUsecase>()),
+    );
+    getIt.registerSingleton(
+      CollectUniqueGenreNamesUsecase(getIt<ResolveGenreNamesUsecase>()),
+    );
   }
 }
