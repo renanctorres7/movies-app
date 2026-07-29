@@ -7,6 +7,7 @@ import 'package:movies/app/features/search/presenter/pages/search_page.dart';
 
 import '../../features/search/presenter/models/movie_details_args.dart';
 import '../../features/search/presenter/stores/search_bloc.dart';
+import '../../features/search/presenter/stores/search_event.dart';
 
 class AppPages {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -22,7 +23,7 @@ class AppPages {
                       filterByGenreUsecase: getIt(),
                       collectUniqueGenreNamesUsecase: getIt(),
                       imageUrlBuilder: getIt(),
-                    ),
+                    )..add(SearchStarted()),
                 child: const SearchPage()));
       case AppRoutes.details:
         final args = settings.arguments as MovieDetailsArgs;

@@ -79,7 +79,7 @@ class SearchPage extends StatelessWidget {
                           onRetry: retry,
                         ),
                       LoadingStatus.complete => SearchResultsSliver(
-                          results: state.filteredResults,
+                          results: state.displayedResults,
                           bottomPadding: bottomPadding,
                           onMovieTap: (movie) {
                             Navigator.of(context).pushNamed(
