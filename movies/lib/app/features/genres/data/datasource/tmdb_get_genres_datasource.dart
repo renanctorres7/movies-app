@@ -5,6 +5,8 @@ import 'package:movies/app/core/core.dart';
 import 'package:movies/app/features/genres/infra/datasources/datasources.dart';
 import 'package:movies/app/features/genres/infra/models/models.dart';
 
+import '../../../../core/errors/api_exception.dart';
+
 class TmdbGetGenresDatasource implements GetGenresListDatasource {
   final Client client;
   final String apiKey;
@@ -29,6 +31,6 @@ class TmdbGetGenresDatasource implements GetGenresListDatasource {
           .toList();
     }
 
-    throw Exception('Failed to load genres');
+    throw ApiException(statusCode: result.statusCode, message: result.body);
   }
 }

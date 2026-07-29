@@ -8,7 +8,7 @@ import 'package:movies/app/features/genres/domain/usecases/usecases.dart';
 import 'package:movies/app/features/search/data/datasource/tmdb_image_url_builder.dart';
 import 'package:movies/app/features/search/domain/usecases/usecases.dart';
 import 'package:movies/app/features/search/infra/models/models.dart';
-import 'package:movies/app/features/search/presenter/stores/search_store.dart';
+import 'package:movies/app/features/search/presenter/stores/search_bloc.dart';
 
 class SearchByTextUsecaseMock extends Mock implements SearchByTextUsecase {}
 

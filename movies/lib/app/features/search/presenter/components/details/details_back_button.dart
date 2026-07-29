@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/app/core/theme/app_colors.dart';
 
@@ -15,7 +14,7 @@ class DetailsBackButton extends StatelessWidget {
       child: Align(
         alignment: Alignment.topLeft,
         child: GestureDetector(
-          onTap: onTap ?? Get.back,
+          onTap: onTap ?? () => Navigator.of(context).pop(),
           child: Container(
             padding: const EdgeInsets.only(right: 10, left: 10),
             width: 75,

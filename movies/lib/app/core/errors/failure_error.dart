@@ -18,3 +18,13 @@ class DataSourceError extends FailureError {
   @override
   List<Object?> get props => [];
 }
+
+class ApiError extends FailureError {
+  final int statusCode;
+  final String message;
+
+  ApiError({required this.statusCode, required this.message});
+
+  @override
+  List<Object?> get props => [statusCode, message];
+}
