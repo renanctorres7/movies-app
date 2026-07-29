@@ -43,7 +43,7 @@ class BigPosterWidget extends StatelessWidget {
                     height: 430,
                     width: 300,
                     fit: BoxFit.cover,
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.centerLeft,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
                         return child;
