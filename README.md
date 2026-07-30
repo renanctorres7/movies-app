@@ -1,6 +1,6 @@
 # Movies App
 
-App Flutter de busca de filmes usando a [API do TMDB](https://developers.themoviedb.org/3), construído com **Clean Architecture**, **GetIt**, **GetX** e testes unitários por camada.
+App Flutter de busca de filmes usando a [API do TMDB](https://developers.themoviedb.org/3), construído com **Clean Architecture**, **GetIt**, **flutter_bloc** e testes unitários por camada.
 
 ## Estrutura do repositório
 
@@ -50,10 +50,10 @@ Organização **feature-first**:
 ```
 lib/app/
 ├── core/
-│   ├── errors/              # FailureError, NullError, DataSourceError, DomainError
+│   ├── errors/              # FailureError, NullError, DataSourceError, DomainError, ApiError
 │   ├── endpoints/           # URLs TMDB
 │   ├── environments/        # apiKey via dart-define
-│   ├── routes/              # rotas GetX
+│   ├── routes/              # MaterialApp + onGenerateRoute
 │   ├── theme/
 │   ├── utils/               # DI (GetIt), LoadingStatus
 │   └── widgets/             # widgets universais reutilizáveis
@@ -63,11 +63,10 @@ lib/app/
     │   ├── infra/           # datasources (contratos), models, repository (impl)
     │   ├── data/            # datasource TMDB (http)
     │   └── presenter/
-    │       ├── bindings/
     │       ├── components/  # UI específica da feature (search/, details/)
     │       ├── models/
     │       ├── pages/
-    │       └── stores/      # GetX
+    │       └── stores/      # SearchBloc, SearchEvent, SearchState
     └── genres/
         ├── domain/
         ├── infra/
@@ -78,7 +77,7 @@ lib/app/
 
 | Pasta | Responsabilidade | Exemplos |
 |-------|------------------|----------|
-| `core/widgets/` | Componentes genéricos, sem store/GetX | `SearchBox`, `BigPosterWidget`, `SelectableChipTabBar`, `LoadingSliver` |
+| `core/widgets/` | Componentes genéricos, sem Bloc | `SearchBox`, `BigPosterWidget`, `SelectableChipTabBar`, `LoadingSliver` |
 | `presenter/components/` | Composição específica da feature | `SearchHeaderDelegate`, `SearchResultsSliver`, `DetailsContent` |
 | `presenter/pages/` | Orquestração fina das telas | `SearchPage`, `DetailsPage` |
 
@@ -103,11 +102,12 @@ test/
 | Datasource (contrato) | `infra/datasources/` | `search_by_text_datasource.dart` |
 | Datasource (impl) | `data/datasource/tmdb_*` | `tmdb_search_by_text_datasource.dart` |
 | Model | `extends Entity` + `fromEntity()` | `search_results_model.dart` |
+| Bloc | `<feature>_bloc.dart` + event/state | `search_bloc.dart` |
 
 ### Fluxo de dados
 
 ```
-Presenter (GetX) → UseCase → Repository (domain)
+Presenter (Bloc) → UseCase → Repository (domain)
                                 ↓
                          RepositoryImpl (infra)
                                 ↓
@@ -116,13 +116,14 @@ Presenter (GetX) → UseCase → Repository (domain)
                          Tmdb*Datasource (data)
 ```
 
-Erros funcionais via `Either<FailureError, T>` com `NullError`, `DataSourceError` e `DomainError`.
+Erros funcionais via `Either<FailureError, T>` com `NullError`, `DataSourceError`, `DomainError` e `ApiError`.
 
 ## Decisões técnicas
 
 - `Either<FailureError, T>` para erros funcionais
 - Models estendem entities — sem `toEntity()` nos repositórios
 - Um repository e um use case por operação
-- `ImageUrlBuilder` injetado via `SearchStore` — pages não acessam infra diretamente
+- `ImageUrlBuilder` injetado via `SearchBloc` — pages não acessam infra diretamente
 - Widgets universais em `core/widgets/`; UI da feature em `presenter/components/`
-- Camada `presenter/` com GetX para estado e navegação
+- Camada `presenter/` com **flutter_bloc** para estado; navegação via `Navigator` / `onGenerateRoute`
+- DI de use cases e datasources com **GetIt**; `BlocProvider` cria o `SearchBloc` por rota
